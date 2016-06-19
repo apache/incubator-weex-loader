@@ -88,7 +88,7 @@ function stringifyFunction(key, value) {
 function parseTemplate(loader, params, source, deps) {
     return new Promise(function(resolve, reject) {
         if (!templater) {
-            return reject('please use a template parser. ex. weex-templater');
+            return reject('please use a template parser. e.g. weex-templater');
         }
 
         templater.parse(source, function(err, obj) {
