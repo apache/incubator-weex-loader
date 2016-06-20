@@ -9,9 +9,9 @@ var blocker = require('weex-transformer/lib/blocker');
 var pkg = require('./package.json');
 var transformerVersion = pkg.dependencies['weex-transformer'].match(/\d+(?:\.\d+){0,2}/)[0];
 
-var templater;
-var styler;
-var scripter;
+var templater = require('weex-templater');
+var styler = require('weex-styler');
+var scripter = require('weex-scripter');
 
 var MODULE_EXPORTS_REG = /module\.exports/g;
 var REQUIRE_REG = /require\((["'])(\@weex\-module\/[^\)\1]+)\1\)/g;
@@ -257,15 +257,15 @@ function loader(source) {
 }
 
 loader.useScripter = function(module) {
-    scripter = module;
+    console.warn('\u001b[1;32m[Warn]\u001b[0m: method useScripter() in weex-loader is no more necessary');
 }
 
 loader.useStyler = function(module) {
-    styler = module;
+    console.warn('\u001b[1;32m[Warn]\u001b[0m: method useStyler() in weex-loader is no more necessary');
 }
 
 loader.useTemplater = function(module) {
-    templater = module;
+    console.warn('\u001b[1;32m[Warn]\u001b[0m: method useTemplater() in weex-loader is no more necessary');
 }
 
 loader.setLogLevel = function(level) {

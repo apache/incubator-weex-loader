@@ -22,11 +22,6 @@
     "test": "npm run test:build && npm run test:transform && npm run test:mocha",
     "serve": "serve ./test -p 12581"
   },
-  "peerDependencies": {
-    "weex-scripter": "^0.1.4",
-    "weex-styler": "^0.0.17",
-    "weex-templater": "^0.2.1"
-  },
   "devDependencies": {
     "babel-core": "^6.7.6",
     "babel-loader": "^6.2.4",
@@ -43,6 +38,9 @@
   "dependencies": {
     "loader-utils": "~0.2.14",
     "md5": "^2.1.0",
+    "weex-scripter": "^0.1.4",
+    "weex-styler": "^0.0.17",
+    "weex-templater": "^0.2.1",
     "weex-transformer": "^0.3.1"
   }
 }

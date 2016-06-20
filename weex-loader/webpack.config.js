@@ -1,13 +1,6 @@
 var path = require('path');
 var webpack = require('webpack');
 var loader = require('./index.js');
-var scripter = require('weex-scripter');
-var styler = require('weex-styler');
-var templater = require('weex-templater');
-
-loader.useScripter(scripter);
-loader.useStyler(styler);
-loader.useTemplater(templater);
 
 module.exports = {
   entry: {
