@@ -16,10 +16,6 @@ npm install weex-loader --save
 3. Can require a CommonJS module.
 4. Can specify the name of a component.
 
-## Not yet for Spec
-
-0. `<we-element>/<wa-element>/<wx-element>/<element>` tag
-
 ## Usage
 
 ### How to load a `.we` file.
@@ -28,7 +24,6 @@ npm install weex-loader --save
 ```javascript
 var path = require('path');
 var webpack = require('webpack');
-
 var loader = require('weex-loader');
 
 module.exports = {
@@ -45,7 +40,7 @@ module.exports = {
       }
     ]
   }
-}
+};
 ```
 
 ### How to write parted files
