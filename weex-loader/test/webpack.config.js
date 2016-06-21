@@ -1,14 +1,15 @@
 var path = require('path');
 var webpack = require('webpack');
-var loader = require('./index.js');
+var loader = require('../index.js');
 
 module.exports = {
   entry: {
-    a: './test/a.js?entry=true',
-    z: './test/expect/z.we?entry=true'
+    a: path.resolve(__dirname, 'a.js?entry=true'),
+    b: path.resolve(__dirname, 'expect/b.we?entry=true'),
+    z: path.resolve(__dirname, 'expect/z.we?entry=true')
   },
   output: {
-    path: './test/actual',
+    path: path.resolve(__dirname, 'actual'),
     filename: '[name].js'
   },
   module: {
@@ -20,7 +21,7 @@ module.exports = {
       {
         test: /\.js(\?[^?]+)?$/,
         exclude: [
-          path.resolve(__dirname, 'test/lib')
+          path.resolve(__dirname, 'lib')
         ],
         loaders: ['index.js?type=script', 'babel?presets[]=es2015']
       },
@@ -41,4 +42,4 @@ module.exports = {
   resolveLoader: {
     modulesDirectories: ['./', './node_modules']
   }
-}
+};
