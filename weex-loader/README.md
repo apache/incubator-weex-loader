@@ -8,14 +8,6 @@ A webpack loader for Weex.
 npm install weex-loader --save
 ```
 
-## Dependencies
-
-The loader needs `weex-scripter/weex-styler/weex-templater` in peer dependencies. You should install them in your projects.
-
-```
-npm install weex-scripter weex-styler weex-templater --save
-```
-
 ## Feature
 
 0. Can load `.we` file.
@@ -38,14 +30,6 @@ var path = require('path');
 var webpack = require('webpack');
 
 var loader = require('weex-loader');
-var scripter = require('weex-scripter');
-var styler = require('weex-styler');
-var templater = require('weex-templater');
-
-/* use the default parsers or your custom parsers */
-loader.useScripter(scripter);
-loader.useStyler(styler);
-loader.useTemplater(templater);
 
 module.exports = {
   entry: './test/main.we?entry=true',
