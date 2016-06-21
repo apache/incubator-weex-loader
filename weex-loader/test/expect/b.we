@@ -1,0 +1,19 @@
+<element name="y">
+  <template>
+    <div>
+      <item></item>
+      <text>y</text>
+    </div>
+  </template>
+</element>
+
+<template>
+  <div>
+    <text>Hello</text>
+    <y></y>
+  </div>
+</template>
+
+<script>
+  require('../lib/3rd.js')
+</script>

@@ -1,1 +1,4 @@
 node_modules
+
+test/actual
+test/expect/*.js

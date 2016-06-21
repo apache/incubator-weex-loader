@@ -16,7 +16,7 @@
     "transformer"
   ],
   "scripts": {
-    "test:build": "webpack --config webpack.config.js",
+    "test:build": "webpack --config test/webpack.config.js",
     "test:transform": "transformer test/expect/*.we -o test/expect",
     "test:mocha": "mocha --compilers js:babel-core/register test/test.js",
     "test": "npm run test:build && npm run test:transform && npm run test:mocha",

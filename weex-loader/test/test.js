@@ -40,6 +40,25 @@ describe('loader', () => {
     expect(actualJson).eql(expectJson);
   });
 
+  it('element tag, 3rd-party js, implicit component', function() {
+    var name = 'b.js';
+
+    var actualCodePath = path.resolve(__dirname, 'actual', name);
+    var actualCodeContent = fs.readFileSync(actualCodePath);
+
+    var expectCodePath = path.resolve(__dirname, 'expect', name);
+    var expectCodeContent = fs.readFileSync(expectCodePath);
+
+
+    var actualResult = createInstance('actual/' + name, actualCodeContent);
+    var actualJson = getRoot('actual/' + name);
+
+    var expectResult = createInstance('expect/' + name, expectCodeContent);
+    var expectJson = getRoot('expect/' + name);
+
+    expect(actualJson).eql(expectJson);
+  });
+
   it('with config & data case', function() {
     var name = 'z.js';
 
