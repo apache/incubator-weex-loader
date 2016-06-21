@@ -16,16 +16,18 @@ var scripter = require('weex-scripter');
 var MODULE_EXPORTS_REG = /module\.exports/g;
 var REQUIRE_REG = /require\((["'])(\@weex\-module\/[^\)\1]+)\1\)/g;
 
-function parseScript(loader, params, source, config, data) {
+function parseScript(loader, params, source, config, data, elementName, elements) {
+    elements = elements || []
+
     if (!scripter) {
         return Promise.reject('please use a script parser. e.g. weex-scripter');
     }
 
     var target = scripter.fix(source);
-    var name = params.resourceQuery.name || 
+    var name = elementName || params.resourceQuery.name ||
                     path.basename(params.resourcePath).replace(/\..*$/, '');
 
-    if (params.resourceQuery.entry === true) {
+    if (!elementName && params.resourceQuery.entry === true) {
         name = md5(source);
     }
 
@@ -36,11 +38,13 @@ function parseScript(loader, params, source, config, data) {
                 'function(__weex_require__, __weex_exports__, __weex_module__)' + 
                 '{\n' + target + '\n})';
 
-    if (params.resourceQuery.entry === true) {
+    if (!elementName && params.resourceQuery.entry === true) {
         target += '\n;__weex_bootstrap__("@weex-component/' + name + '", ' + 
                     String(config) + ',' + 
                     String(data) + ')';
     }
+
+    target = elements.concat(target).join(';\n\n')
 
     return Promise.resolve(target);
 }
@@ -122,9 +126,9 @@ function parseTemplate(loader, params, source, deps) {
     });
 }
 
-function parseWeexFile(loader, params, source) {
+function parseWeexFile(loader, params, source, deps, elementName) {
     var results;
-    var deps = [];
+    deps = deps || [];
 
     return new Promise(function(resolve, reject) {
         blocker.format(source, function(err, ret) {
@@ -136,24 +140,32 @@ function parseWeexFile(loader, params, source) {
             }
         });
     }).then(function() {
-        var promises = [Promise.resolve(), Promise.resolve()];
+        var promises = [Promise.resolve(), Promise.resolve(), Promise.resolve()];
         var content;
-
+        if (results.elements) {
+            var elPromises = []
+            Object.keys(results.elements).forEach(function (key) {
+                var el = results.elements[key];
+                elPromises.push(parseWeexFile(loader, params, el.content, deps, el.name));
+            });
+            promises[0] = Promise.all(elPromises);
+        }
         if (results.template) {
             content = results.template.content;
-            promises[0] = parseTemplate(loader, params, content, deps);
+            promises[1] = parseTemplate(loader, params, content, deps);
         }
         if (results.styles) {
             content = results.styles.reduce(function(pre, cur) {
                 return pre + '\n' + cur.content;
             }, '');
-            promises[1] = parseStyle(loader, params, content);
+            promises[2] = parseStyle(loader, params, content);
         }
 
         return Promise.all(promises);
     }).then(function(ret) {
-        var template = ret[0];
-        var style = ret[1];
+        var elements = ret[0] || [];
+        var template = ret[1];
+        var style = ret[2];
 
         var content = '';
         var config = {};
@@ -174,7 +186,6 @@ function parseWeexFile(loader, params, source) {
                     return '';
                 }
             }).join('\n');
-
             content = requireContent + '\n' + content;
         }
 
@@ -198,8 +209,7 @@ function parseWeexFile(loader, params, source) {
             data = new Function('return ' + results.data.content.replace(/\n/g, ''))();
             data = JSON.stringify(data, null, ' ');
         }
-        
-        return parseScript(loader, params, content, config, data);
+        return parseScript(loader, params, content, config, data, elementName, elements);
     });
 }
 
@@ -248,7 +258,6 @@ function loader(source) {
             type === 'html' || type === 'tpl' || type === 'template') {
             result = 'module.exports=' + result;
         }
-        // console.log('\n[' + type + ', ' + params.resourcePath + ']\n', source, '\n=========>\n', result + '\n');
         callback(null, result);
     }).catch(function(err) {
         self.emitError(err.toString());
