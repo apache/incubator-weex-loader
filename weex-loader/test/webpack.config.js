@@ -1,6 +1,4 @@
-var path = require('path');
-var webpack = require('webpack');
-var loader = require('../index.js');
+var path = require('path')
 
 module.exports = {
   entry: {
@@ -42,4 +40,4 @@ module.exports = {
   resolveLoader: {
     modulesDirectories: ['./', './node_modules']
   }
-};
+}
