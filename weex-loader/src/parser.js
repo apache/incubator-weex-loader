@@ -18,14 +18,14 @@ import {
   appendToWarn
 } from './util'
 
-export function parseWeexFile (loader, params, source, deps, elementName) {
+export function parseWeex (loader, params, source, map, deps, elementName) {
   return new Promise(
     // separate source into <element>s, <template>, <style>s and <script>s
     separateBlocks(source, deps || []))
     // pre-parse non-javascript parts
-    .then(preParseBlocks(loader, params, elementName))
+    .then(preParseBlocks(loader, params, map))
     // join blocks together and parse as javascript finally
-    .then(parseBlocks(loader, params, elementName))
+    .then(parseBlocks(loader, params, map, elementName))
 }
 
 function separateBlocks (source, deps) {
@@ -42,7 +42,7 @@ function separateBlocks (source, deps) {
   }
 }
 
-function preParseBlocks (loader, params) {
+function preParseBlocks (loader, params, map) {
   return (blocks) => {
     const { deps, elements, template, styles, scripts, config, data } = blocks
     const promises = [
@@ -60,7 +60,8 @@ function preParseBlocks (loader, params) {
       const elPromises = []
       Object.keys(elements).forEach(key => {
         const el = elements[key]
-        elPromises.push(parseWeexFile(loader, params, el.content, deps, el.name))
+        map.setElementPosition(el.name, el.line, el.column)
+        elPromises.push(parseWeex(loader, params, el.content, map, deps, el.name))
       })
       promises[0] = Promise.all(elPromises)
     }
@@ -80,7 +81,7 @@ function preParseBlocks (loader, params) {
   }
 }
 
-function parseBlocks (loader, params, elementName) {
+function parseBlocks (loader, params, map, elementName) {
   return (results) => {
     const elements = results[0] || []
     const template = results[1]
@@ -94,8 +95,19 @@ function parseBlocks (loader, params, elementName) {
     let config = {}
     let data
 
+    const mapOffset = { basic: 0, subs: [] }
+
     if (scripts) {
       content += scripts.reduce((pre, cur) => {
+        const line = pre.split(/\r?\n/g).length
+        const column = 1
+        const oriLine = cur.line - 1
+        const oriColumn = cur.column
+        mapOffset.subs.push({
+          original: { line: oriLine, column: oriColumn },
+          generated: { line, column },
+          length: cur.content.split(/\r?\n/g).length
+        })
         return pre + '\n;' + cur.content
       }, '')
     }
@@ -105,7 +117,10 @@ function parseBlocks (loader, params, elementName) {
       requireContent += deps.map(dep =>
         depHasRequired(content, dep) ? 'require("' + dep + '");' : ''
       ).join('\n')
-      content = requireContent + '\n' + content
+      if (requireContent) {
+        content = requireContent + '\n' + content
+        mapOffset.basic = requireContent.split(/\r?\n/g).length
+      }
     }
 
     if (template) {
@@ -129,7 +144,7 @@ function parseBlocks (loader, params, elementName) {
       data = JSON.stringify(data, null, 2)
     }
 
-    return parseScript(loader, params, content, { config, data, elementName, elements })
+    return parseScript(loader, params, content, { config, data, elementName, elements, map, mapOffset })
   }
 }
 
@@ -175,7 +190,7 @@ export function parseStyle (loader, params, source) {
 }
 
 export function parseScript (loader, params, source, env) {
-  const { config, data, elementName, elements } = env
+  const { config, data, elementName, elements, map, mapOffset } = env
 
   // the entry component has a special resource query and not a sub element tag
   const isEntry = params.resourceQuery.entry === true && !elementName
@@ -185,16 +200,29 @@ export function parseScript (loader, params, source, env) {
     ? md5(source)
     : (elementName || params.resourceQuery.name || getNameByPath(params.resourcePath))
 
+  // join with elements deps
+  // 2 more lines at end
+  map && map.start()
+  const prefix = (elements || []).reduce((current, next, index) => {
+    map && map.addElement(name, index, current.split(/\r?\n/g).length, next.split(/\r?\n/g).length)
+    return current + next + ';\n\n'
+  }, '')
+
   // fix data option from an object to a function
   let target = scripter.fix(source)
 
   // wrap with __weex_define__(name, [], (r, e, m) {...})
+  // 1 more line at start, 1 more line at end
   target = target
       .replace(MODULE_EXPORTS_REG, '__weex_module__.exports')
       .replace(REQUIRE_REG, '__weex_require__($1$2$1)')
   target = ';__weex_define__("@weex-component/' + name + '", [], ' +
       'function(__weex_require__, __weex_exports__, __weex_module__)' +
       '{\n' + target + '\n})'
+  mapOffset && mapOffset.subs.forEach(info => {
+    map.addScript(elementName || name, info, prefix.split(/\r?\n/g).length + mapOffset.basic)
+  })
+  map && map.end()
 
   // append __weex_bootstrap__ for entry component
   if (isEntry) {
@@ -203,9 +231,6 @@ export function parseScript (loader, params, source, env) {
         String(data) + ')'
   }
 
-  // join with elements deps
-  target = (elements || []).concat(target).join(';\n\n')
-
-  return Promise.resolve(target)
+  return Promise.resolve(prefix + target)
 }
 

@@ -10,6 +10,10 @@ export function getNameByPath (filepath) {
   return path.basename(filepath).replace(/\..*$/, '')
 }
 
+export function getFilenameByPath (filepath) {
+  return path.relative('.', filepath)
+}
+
 export const FUNC_START = '#####FUN_S#####'
 export const FUNC_START_REG = new RegExp('["\']' + FUNC_START, 'g')
 export const FUNC_END = '#####FUN_E#####'
