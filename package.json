@@ -1,14 +1,14 @@
 {
   "name": "weex-loader",
-  "version": "0.1.5",
+  "version": "0.2.0",
   "description": "a webpack loader for weex",
   "main": "index.js",
   "author": "terrykingcha <terrykingcha@gmail.com>",
   "repository": {
     "type": "git",
-    "url": "git@github.com:alibaba/weex_toolchain.git"
+    "url": "https://github.com/weexteam/weex-loader.git"
   },
-  "licenses": "MIT",
+  "licenses": "GPL",
   "keywords": [
     "weex",
     "loader",

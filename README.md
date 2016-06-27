@@ -83,7 +83,7 @@ Then change the entry to `main.js` in `webpack.config.js`
 #### add some loader in webpack config
 
 **loader for script**
-```json
+```javascript
   {
     test: /\.js(\?[^?]+)?$/,
     loader: 'weex?type=script'
@@ -91,7 +91,7 @@ Then change the entry to `main.js` in `webpack.config.js`
 ```
 
 **loader for style**
-```json
+```javascript
   {
     test: /\.css(\?[^?]+)?$/, 
     loader: 'weex?type=style'
@@ -99,7 +99,7 @@ Then change the entry to `main.js` in `webpack.config.js`
 ```
 
 **loader for template**
-```json
+```javascript
   {
     test: /\.tpl(\?[^?]+)?$/, 
     loader: 'weex?type=tpl'
@@ -130,7 +130,7 @@ For examples:
 
 Only your need is chain babel-loader before weex-loader.
 
-```json
+```javascript
   {
     test: /\.js(\?[^?]+)?$/,
     loader: 'weex?type=script!babel?presets[]=es2015'
@@ -141,7 +141,7 @@ Only your need is chain babel-loader before weex-loader.
 
 Only your need is chain scss loader before weex-loader.
 
-```json
+```javascript
   {
     test: /\.scss(\?[^?]+)?$/, 
     loader: 'weex?type=style!scss'
