@@ -2,9 +2,7 @@ var path = require('path')
 
 module.exports = {
   entry: {
-    a: path.resolve(__dirname, 'a.js?entry=true'),
-    b: path.resolve(__dirname, 'expect/b.we?entry=true'),
-    z: path.resolve(__dirname, 'expect/z.we?entry=true')
+    a: path.resolve(__dirname, 'spec', 'a.we') + '?entry'
   },
   output: {
     path: path.resolve(__dirname, 'actual'),
@@ -14,30 +12,18 @@ module.exports = {
     loaders: [
       {
         test: /\.we(\?[^?]+)?$/,
-        loaders: ['index.js']
-      },
-      {
-        test: /\.js(\?[^?]+)?$/,
-        exclude: [
-          path.resolve(__dirname, 'lib')
-        ],
-        loaders: ['index.js?type=script', 'babel?presets[]=es2015']
-      },
-      {
-        test: /\.css(\?[^?]+)?$/, 
-        loaders: ['index.js?type=style']
-      },
-      {
-        test: /\.less(\?[^?]+)?$/, 
-        loaders: ['index.js?type=style', 'less']
-      },
-      {
-        test: /\.tpl(\?[^?]+)?$/, 
-        loaders: ['index.js?type=tpl']
+        loaders: ['lib/loader.js']
       }
     ]
   },
   resolveLoader: {
     modulesDirectories: ['./', './node_modules']
+  },
+  weex: {
+    loaders: {
+      es6: ['babel'],
+      cssnext: ['postcss-cssnext'],
+      jade: ['jade']
+    }
   }
 }

@@ -1,80 +1,40 @@
-var fs = require('fs');
-var path =require('path');
+const fs = require('fs');
+const MemoryFS = require("memory-fs");
+const path =require('path');
 
-var chai = require('chai');
-var sinon = require('sinon');
-var sinonChai = require('sinon-chai');
-var expect = chai.expect;
+const chai = require('chai');
+const sinon = require('sinon');
+const sinonChai = require('sinon-chai');
+const expect = chai.expect;
 chai.use(sinonChai);
 
-require('./lib/jsfm');
-var createInstance = global.createInstance;
-var getRoot = global.getRoot;
+const webpackConfig = require('./webpack.config.js');
+const webpack = require('webpack');
+
 
 describe('loader', () => {
+  it('simple', (done) => {
+    const config = Object.assign({}, webpackConfig, {
+      entry: {
+        a: path.resolve(__dirname, 'spec', 'a.we')
+      }
+    });
 
-  before(function() {
-    global.callNative = sinon.spy();
-  });
+    const compiler = webpack(config);
+    const mfs = new MemoryFS;
+    // compiler.outputFileSystem = mfs;
+    compiler.run((err, stats) => {
+      if (err) {
+        return done(err);
+      }
 
-  after(function() {
-    global.callNative = undefined;
-  });
-
-  it('simple case', function() {
-    var name = 'a.js';
-
-    var actualCodePath = path.resolve(__dirname, 'actual', name);
-    var actualCodeContent = fs.readFileSync(actualCodePath);
-
-    var expectCodePath = path.resolve(__dirname, 'expect', name);
-    var expectCodeContent = fs.readFileSync(expectCodePath);
-
-
-    var actualResult = createInstance('actual/' + name, actualCodeContent);
-    var actualJson = getRoot('actual/' + name);
-
-    var expectResult = createInstance('expect/' + name, expectCodeContent);
-    var expectJson = getRoot('expect/' + name);
-
-    expect(actualJson).eql(expectJson);
-  });
-
-  it('element tag, 3rd-party js, implicit component', function() {
-    var name = 'b.js';
-
-    var actualCodePath = path.resolve(__dirname, 'actual', name);
-    var actualCodeContent = fs.readFileSync(actualCodePath);
-
-    var expectCodePath = path.resolve(__dirname, 'expect', name);
-    var expectCodeContent = fs.readFileSync(expectCodePath);
-
-
-    var actualResult = createInstance('actual/' + name, actualCodeContent);
-    var actualJson = getRoot('actual/' + name);
-
-    var expectResult = createInstance('expect/' + name, expectCodeContent);
-    var expectJson = getRoot('expect/' + name);
-
-    expect(actualJson).eql(expectJson);
-  });
-
-  it('with config & data case', function() {
-    var name = 'z.js';
-
-    var actualCodePath = path.resolve(__dirname, 'actual', name);
-    var actualCodeContent = fs.readFileSync(actualCodePath);
-
-    var expectCodePath = path.resolve(__dirname, 'expect', name);
-    var expectCodeContent = fs.readFileSync(expectCodePath);
-
-
-    var actualResult = createInstance('actual/' + name, actualCodeContent);
-    var actualJson = getRoot('actual/' + name);
-
-    var expectResult = createInstance('expect/' + name, expectCodeContent);
-    var expectJson = getRoot('expect/' + name);
-
-    expect(actualJson).eql(expectJson);
+      console.log(stats.toString({
+        chunks: false,
+        color: true
+      }))
+      // const result = fs.readFileSync(path.resolve(__dirname, 'actual', 'a.we'))
+      // console.log(result)
+      done()
+    })
   });
 })

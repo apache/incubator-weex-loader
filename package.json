@@ -22,7 +22,9 @@
     "test:transform": "transformer test/expect/*.we -o test/expect",
     "test:mocha": "mocha test/test.js",
     "test": "npm run prepublish && npm run test:lint && npm run test:build && npm run test:transform && npm run test:mocha",
-    "serve": "serve ./test -p 12581"
+    "serve": "serve ./test -p 12581",
+    "prebuild": "rm -f lib/* && node_modules/babel-cli/bin/babel.js src --out-dir lib",
+    "build": "webpack --config test/webpack.config.js"
   },
   "devDependencies": {
     "babel-cli": "^6.10.1",
@@ -33,7 +35,9 @@
     "eslint": "^2.13.1",
     "less": "^2.6.1",
     "less-loader": "^2.2.3",
+    "memory-fs": "^0.3.0",
     "mocha": "^2.4.5",
+    "parse5": "^2.1.5",
     "serve": "^1.4.0",
     "sinon": "^1.17.3",
     "sinon-chai": "^2.8.0",
