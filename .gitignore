@@ -1,5 +1,3 @@
 node_modules
 lib
-
-test/actual
-test/expect/*.js
+test/actual/*.js

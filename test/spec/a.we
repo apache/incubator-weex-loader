@@ -1,24 +1,3 @@
 <template>
-    <div>
-        <text class="hello">Hello {{name}}</text>
-    </div>
+    <div><text>Hello Weex</text></div>
 </template>
-
-
-<style>
-.hello {
-    font-size: 26px;
-    color: red;
-}
-</style>
-
-
-<script>
-module.exports = {
-    data: function() {
-        return {
-            name: 'Weex'
-        }
-    }
-}
-</script>

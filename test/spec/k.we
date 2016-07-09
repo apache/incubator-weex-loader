@@ -1,0 +1,44 @@
+<template lang="jade">
+.wrap
+    text.text-hi {{hi}}
+    text.text-name {{name}}
+</template>
+
+<style lang="cssnext">
+    :root {
+        --mainColor: red;
+        --subColor: green;
+        --normalFont: {
+            font-size: 26px;
+        };
+    }
+
+    .wrap {
+        flex-direction: row;
+    }
+
+    .text-hi {
+        color: var(--mainColor);
+        @apply --normalFont;
+    }
+
+    .text-name {
+        color: var(--subColor);
+        @apply --normalFont;
+    }
+</style>
+
+<script>
+import modal from '@weex-module/modal'
+
+export function ready() {
+    modal.toast({'message': 'ready'})
+}
+
+export function data() {
+    return {
+        hi: 'Hello',
+        name: 'Weex'
+    }
+}
+</script>

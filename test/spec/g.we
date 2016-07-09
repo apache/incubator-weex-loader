@@ -1,0 +1,27 @@
+<element name="name1" src="./name.we"></element>
+
+<template>
+    <div class="wrap">
+        <hi1 hi="{{hi}}"></hi1>
+        <name1 name="{{name}}"></name1>
+    </div>
+</template>
+
+<style>
+    .wrap {
+        flex-direction: row;
+    }
+</style>
+
+<script>
+require('./hi.we?name=hi1')
+
+module.exports = {
+    data: function() {
+        return {
+            hi: 'Hello',
+            name: 'Weex'
+        }
+    }
+}
+</script>

@@ -1,0 +1,158 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/Users/terry 1/versions/node/v4.2.2/bin/node',
+1 verbose cli   '/Users/terry/versions/node/v4.2.2/bin/npm',
+1 verbose cli   'install',
+1 verbose cli   'weex-loader',
+1 verbose cli   'babel-loader',
+1 verbose cli   ' ' ]
+2 info using npm@3.9.6
+3 info using node@v4.2.2
+4 silly loadCurrentTree Starting
+5 silly install loadCurrentTree
+6 silly install readLocalPackageData
+7 silly fetchPackageMetaData weex-loader
+8 silly fetchPackageMetaData babel-loader@^6.2.4
+9 silly fetchPackageMetaData
+10 silly fetchNamedPackageData babel-loader
+11 silly mapToRegistry name babel-loader
+12 silly mapToRegistry using default registry
+13 silly mapToRegistry registry http://registry.npmjs.org/
+14 silly mapToRegistry data Result {
+14 silly mapToRegistry   raw: 'babel-loader',
+14 silly mapToRegistry   scope: null,
+14 silly mapToRegistry   name: 'babel-loader',
+14 silly mapToRegistry   rawSpec: '',
+14 silly mapToRegistry   spec: 'latest',
+14 silly mapToRegistry   type: 'tag' }
+15 silly mapToRegistry uri http://registry.npmjs.org/babel-loader
+16 silly fetchNamedPackageData weex-loader
+17 silly mapToRegistry name weex-loader
+18 silly mapToRegistry using default registry
+19 silly mapToRegistry registry http://registry.npmjs.org/
+20 silly mapToRegistry data Result {
+20 silly mapToRegistry   raw: 'weex-loader',
+20 silly mapToRegistry   scope: null,
+20 silly mapToRegistry   name: 'weex-loader',
+20 silly mapToRegistry   rawSpec: '',
+20 silly mapToRegistry   spec: 'latest',
+20 silly mapToRegistry   type: 'tag' }
+21 silly mapToRegistry uri http://registry.npmjs.org/weex-loader
+22 silly fetchDirectoryPackageData null
+23 verbose request uri http://registry.npmjs.org/weex-loader
+24 verbose request no auth needed
+25 info attempt registry request try #1 at 03:16:37
+26 verbose request using bearer token for auth
+27 verbose request id b05395499c9e154f
+28 http request GET http://registry.npmjs.org/weex-loader
+29 verbose request uri http://registry.npmjs.org/babel-loader
+30 verbose request no auth needed
+31 info attempt registry request try #1 at 03:16:37
+32 verbose request using bearer token for auth
+33 verbose etag "EW23D9MKRNP2807DDKRUKPXG"
+34 http request GET http://registry.npmjs.org/babel-loader
+35 http 200 http://registry.npmjs.org/weex-loader
+36 verbose headers { server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+36 verbose headers   etag: '"84NTPFZCZIPAGB6NSL28IXNOE"',
+36 verbose headers   'content-type': 'application/json',
+36 verbose headers   'content-encoding': 'gzip',
+36 verbose headers   'cache-control': 'max-age=300',
+36 verbose headers   'transfer-encoding': 'chunked',
+36 verbose headers   'accept-ranges': 'bytes',
+36 verbose headers   date: 'Sat, 09 Jul 2016 19:13:18 GMT',
+36 verbose headers   via: '1.1 varnish',
+36 verbose headers   connection: 'keep-alive',
+36 verbose headers   'x-served-by': 'cache-lcy1123-LCY',
+36 verbose headers   'x-cache': 'MISS',
+36 verbose headers   'x-cache-hits': '0',
+36 verbose headers   'x-timer': 'S1468091598.000096,VS0,VE356',
+36 verbose headers   vary: 'Accept-Encoding' }
+37 silly get cb [ 200,
+37 silly get   { server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+37 silly get     etag: '"84NTPFZCZIPAGB6NSL28IXNOE"',
+37 silly get     'content-type': 'application/json',
+37 silly get     'content-encoding': 'gzip',
+37 silly get     'cache-control': 'max-age=300',
+37 silly get     'transfer-encoding': 'chunked',
+37 silly get     'accept-ranges': 'bytes',
+37 silly get     date: 'Sat, 09 Jul 2016 19:13:18 GMT',
+37 silly get     via: '1.1 varnish',
+37 silly get     connection: 'keep-alive',
+37 silly get     'x-served-by': 'cache-lcy1123-LCY',
+37 silly get     'x-cache': 'MISS',
+37 silly get     'x-cache-hits': '0',
+37 silly get     'x-timer': 'S1468091598.000096,VS0,VE356',
+37 silly get     vary: 'Accept-Encoding' } ]
+38 verbose get saving weex-loader to /Users/terry/.npm/registry.npmjs.org/weex-loader/.cache.json
+39 verbose correctMkdir /Users/terry/.npm correctMkdir not in flight; initializing
+40 http 200 http://registry.npmjs.org/babel-loader
+41 verbose headers { server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+41 verbose headers   etag: '"CN9KCPC8USQ6FOZKEY58UCARS"',
+41 verbose headers   'content-type': 'application/json',
+41 verbose headers   'content-encoding': 'gzip',
+41 verbose headers   'cache-control': 'max-age=300',
+41 verbose headers   'transfer-encoding': 'chunked',
+41 verbose headers   'accept-ranges': 'bytes',
+41 verbose headers   date: 'Sat, 09 Jul 2016 19:13:18 GMT',
+41 verbose headers   via: '1.1 varnish',
+41 verbose headers   connection: 'keep-alive',
+41 verbose headers   'x-served-by': 'cache-lcy1129-LCY',
+41 verbose headers   'x-cache': 'MISS',
+41 verbose headers   'x-cache-hits': '0',
+41 verbose headers   'x-timer': 'S1468091597.995738,VS0,VE698',
+41 verbose headers   vary: 'Accept-Encoding' }
+42 silly get cb [ 200,
+42 silly get   { server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+42 silly get     etag: '"CN9KCPC8USQ6FOZKEY58UCARS"',
+42 silly get     'content-type': 'application/json',
+42 silly get     'content-encoding': 'gzip',
+42 silly get     'cache-control': 'max-age=300',
+42 silly get     'transfer-encoding': 'chunked',
+42 silly get     'accept-ranges': 'bytes',
+42 silly get     date: 'Sat, 09 Jul 2016 19:13:18 GMT',
+42 silly get     via: '1.1 varnish',
+42 silly get     connection: 'keep-alive',
+42 silly get     'x-served-by': 'cache-lcy1129-LCY',
+42 silly get     'x-cache': 'MISS',
+42 silly get     'x-cache-hits': '0',
+42 silly get     'x-timer': 'S1468091597.995738,VS0,VE698',
+42 silly get     vary: 'Accept-Encoding' } ]
+43 verbose get saving babel-loader to /Users/terry/.npm/registry.npmjs.org/babel-loader/.cache.json
+44 verbose correctMkdir /Users/terry/.npm correctMkdir not in flight; initializing
+45 silly install normalizeTree
+46 silly loadCurrentTree Finishing
+47 silly loadIdealTree Starting
+48 silly install loadIdealTree
+49 silly cloneCurrentTree Starting
+50 silly install cloneCurrentTreeToIdealTree
+51 silly cloneCurrentTree Finishing
+52 silly loadShrinkwrap Starting
+53 silly install loadShrinkwrap
+54 silly loadShrinkwrap Finishing
+55 silly loadAllDepsIntoIdealTree Starting
+56 silly install loadAllDepsIntoIdealTree
+57 silly rollbackFailedOptional Starting
+58 silly rollbackFailedOptional Finishing
+59 silly runTopLevelLifecycles Starting
+60 silly runTopLevelLifecycles Finishing
+61 silly install printInstalled
+62 verbose stack Error: Refusing to install weex-loader as a dependency of itself
+62 verbose stack     at checkSelf (/Users/terry 1/versions/node/v4.2.2/lib/node_modules/npm/lib/install/validate-args.js:53:14)
+62 verbose stack     at Array.<anonymous> (/Users/terry 1/versions/node/v4.2.2/lib/node_modules/npm/node_modules/slide/lib/bind-actor.js:15:8)
+62 verbose stack     at LOOP (/Users/terry 1/versions/node/v4.2.2/lib/node_modules/npm/node_modules/slide/lib/chain.js:15:14)
+62 verbose stack     at chain (/Users/terry 1/versions/node/v4.2.2/lib/node_modules/npm/node_modules/slide/lib/chain.js:20:5)
+62 verbose stack     at /Users/terry 1/versions/node/v4.2.2/lib/node_modules/npm/lib/install/validate-args.js:16:5
+62 verbose stack     at /Users/terry 1/versions/node/v4.2.2/lib/node_modules/npm/node_modules/slide/lib/async-map.js:52:35
+62 verbose stack     at Array.forEach (native)
+62 verbose stack     at /Users/terry 1/versions/node/v4.2.2/lib/node_modules/npm/node_modules/slide/lib/async-map.js:52:11
+62 verbose stack     at Array.forEach (native)
+62 verbose stack     at asyncMap (/Users/terry 1/versions/node/v4.2.2/lib/node_modules/npm/node_modules/slide/lib/async-map.js:51:8)
+63 verbose cwd /Users/terry 1/Develop/taobao/weex/toolchain/weex-loader/test
+64 error Darwin 15.0.0
+65 error argv "/Users/terry 1/versions/node/v4.2.2/bin/node" "/Users/terry/versions/node/v4.2.2/bin/npm" "install" "weex-loader" "babel-loader" " "
+66 error node v4.2.2
+67 error npm  v3.9.6
+68 error code ENOSELF
+69 error Refusing to install weex-loader as a dependency of itself
+70 error If you need help, you may report this error at:
+70 error     <https://github.com/npm/npm/issues>
+71 verbose exit [ 1, true ]

@@ -1,0 +1,10 @@
+<template>
+    <div><text class="hi">Hello Weex</text></div>
+</template>
+
+<style>
+.hi {
+    font-size: 26px;
+    color: red;
+}
+</style>

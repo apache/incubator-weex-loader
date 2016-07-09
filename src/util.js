@@ -1,10 +1,7 @@
-import fs from 'fs'
 import path from 'path'
+import loaderUtils from 'loader-utils'
 
 import * as config from './config'
-
-export const MODULE_EXPORTS_REG = /module\.exports/g
-export const REQUIRE_REG = /require\((["'])(@weex\-module\/[^\)\1]+)\1\)/g
 
 export function getNameByPath (filepath) {
   return path.basename(filepath).replace(/\..*$/, '')
@@ -17,12 +14,12 @@ export const FUNC_END_REG = new RegExp(FUNC_END + '["\']', 'g')
 
 export function stringifyFunction (key, value) {
   if (typeof value === 'function') {
-    return FUNC_START + value.toString() + '#####FUN_E#####'
+    return FUNC_START + value.toString() + FUNC_END
   }
   return value
 }
 
-export function appendToWarn (loader, logs) {
+export function logWarn (loader, logs) {
   if (config.logLevel && logs && logs.length) {
     logs.forEach(log => {
       loader.emitWarning(log.reason + '\t@' + log.line + ':' + log.column)
@@ -30,13 +27,40 @@ export function appendToWarn (loader, logs) {
   }
 }
 
-export function checkFileExist (name, resourcePath) {
-  const context = path.dirname(resourcePath)
-  const filename = './' + name + '.we'
-  const filepath = path.resolve(context, filename)
-  return fs.existsSync(filepath) ? filename : null
+export function getRequireString (loaderContext, loader, filepath) {
+  return 'require(' +
+                loaderUtils.stringifyRequest(
+                    loaderContext,
+                    `!!${loader}!${filepath}`
+                ) +
+           ')\n'
 }
 
-export function depHasRequired (content, dep) {
-  return !content.match(new RegExp('require\\(["\']./' + path.basename(dep) + '(.we)?["\']\\)', 'g'))
+export function stringifyLoaders (loaders) {
+  return loaders.map(loader => {
+    if (typeof loader === 'string') {
+      return loader
+    }
+    else {
+      const name = loader.name
+      const query = []
+      if (loader.query) {
+        for (const k in loader.query) {
+          const v = loader.query[k]
+          if (v != null) {
+            if (v === true) {
+              query.push(k)
+            }
+            else {
+              if (v instanceof Array) {
+                query.push(`${k}[]=${v.join(',')}`)
+              }
+              query.push(`${k}=${v}`)
+            }
+          }
+        }
+      }
+      return `${name}${query.length ? ('?' + query.join('&')) : ''}`
+    }
+  }).join('!')
 }

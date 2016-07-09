@@ -5,16 +5,16 @@ A webpack loader for Weex.
 ## Install
 
 ```
-npm install weex-loader --save
+npm install weex-loader babel-loader babel-preset-es2015 babel-runtime babel-plugin-transform-runtime --save
 ```
 
 ## Feature
 
 0. Can load `.we` file.
-1. Can load parted files(`.js/.css/.tpl`) instead of one `.we` file.
-2. Can chain any loader you want when write parted files.
-3. Can require a CommonJS module.
-4. Can specify the name of a component.
+1. Can load parted files(`.js/.css/.html`) via a `src` attribute.
+2. Can specify a custom language to chain any loader.
+3. Can specify name when require `.we` file.
+4. Can write es2015 in script.
 
 ## Usage
 
@@ -45,18 +45,17 @@ module.exports = {
 
 ### How to write parted files
 
-#### write .js/.css/.tpl anywhere
+#### write .js/.css/.html anywhere
 
 **main.js as script**
 ```javascript
 module.exports = {
-    data: {
+    data: function () {
+      return {
         text: 'Hello World'
+      }
     }
 }
-
-module.exports.style = require('./main.css');
-module.exports.template = require('./main.tpl');
 ```
 
 **main.css as style**
@@ -64,46 +63,40 @@ module.exports.template = require('./main.tpl');
 .h1 {
     font-size: 60px;
     color: red;
-    padding-top: 20px;
-    padding-bottom: 20px;
-    padding-left: 20px;
-    padding-right: 20px;
 }
 ```
 
-**main.tpl as template**
+**main.html as template**
 ```html
-<container>
+<div>
     <text class="h1">{{text}}</text>
-</container>
+</div>
 ```
 
-Then change the entry to `main.js` in `webpack.config.js`
+**main.we**
+```html
+<template src="./main.html"></template>
+<style src="./main.css"></style>
+<script src="./main.js"></script>
+```
 
-#### add some loader in webpack config
+#### add some custom language for loaders
 
-**loader for script**
+**append a weex config in webpack config**
 ```javascript
-  {
-    test: /\.js(\?[^?]+)?$/,
-    loader: 'weex?type=script'
+  weex: {
+    lang: {
+      jade: ['jade-html'] // a jade langauge will chain "jade-html-loader"
+    }
   }
 ```
 
-**loader for style**
-```javascript
-  {
-    test: /\.css(\?[^?]+)?$/, 
-    loader: 'weex?type=style'
-  }
+**main.we**
 ```
-
-**loader for template**
-```javascript
-  {
-    test: /\.tpl(\?[^?]+)?$/, 
-    loader: 'weex?type=tpl'
-  }
+<template lang="jade">
+div
+  text Hello Weex
+</template>
 ```
 
 ### How to require a CommonJS module
@@ -111,41 +104,45 @@ Then change the entry to `main.js` in `webpack.config.js`
 0. first, require a `path/to/module.js` in `script` like `var _ = require('lodash')`. 
 1. then use it in `script`.
 
-### How to embed a composed component
+### How to require `.we` file as component element
 
-0. first, require a `path/to/component.js` in `script` like `require('./sub.js')`.
-1. second, use it in `template` like `<sub></sub>`.
+0. first, require a `path/to/component.we` in `script` like `require('./foo.we')` or write inline element like `<element name="foo" src="./foo.we"></element>`.
+1. second, use it in `template` like `<foo></foo>`.
+
+```
+<element name="foo" src="./foo.we"></element>
+
+<template>
+  <div>
+    <foo></foo>
+    <bar></bar>
+  </div>
+</template>
+
+<script>
+  require('./bar.we')
+</script>
+```
 
 ### How to specify the name of a component
 
 0. By default, the name is the basename without extname of component path.
-1. Give a name query in require request, like `require('./sub.js?name="goto"')`
-2. use the name in `template` like `<goto></goto>`.
+1. Give a name query in require request, like `require('./foo.we?name="fooo"')`. Or specify a name attribute in element, like `<element name="fooo" src="./foo.we" ></element>`
+2. use the name in `template` like `<fooo></fooo>`.
 
-## Chain your favorite loader
-
-For examples:
-
-### write ES2015
-
-Only your need is chain babel-loader before weex-loader.
-
-```javascript
-  {
-    test: /\.js(\?[^?]+)?$/,
-    loader: 'weex?type=script!babel?presets[]=es2015'
-  }
 ```
+<element name="fooo" src="./foo.we"></element>
 
-### write SCSS
+<template>
+  <div>
+    <fooo></fooo>
+    <barr></barr>
+  </div>
+</template>
 
-Only your need is chain scss loader before weex-loader.
-
-```javascript
-  {
-    test: /\.scss(\?[^?]+)?$/, 
-    loader: 'weex?type=style!scss'
-  }
+<script>
+  require('./bar.we?name=barr')
+</script>
 ```
 
 ## Test
@@ -154,8 +151,3 @@ Only your need is chain scss loader before weex-loader.
 npm run test
 ```
 will run mocha testing
-
-```bash
-npm run serve
-```
-then open `localhost:12581` on chrome, will run web testing
