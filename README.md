@@ -27,7 +27,7 @@ var webpack = require('webpack');
 var loader = require('weex-loader');
 
 module.exports = {
-  entry: './test/main.we?entry=true',
+  entry: './test/main.we?entry',
   output: {
     path: './test/actual',
     filename: 'main.js'
