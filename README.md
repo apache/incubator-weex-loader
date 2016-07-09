@@ -99,11 +99,6 @@ div
 </template>
 ```
 
-### How to require a CommonJS module
-
-0. first, require a `path/to/module.js` in `script` like `var _ = require('lodash')`. 
-1. then use it in `script`.
-
 ### How to require `.we` file as component element
 
 0. first, require a `path/to/component.we` in `script` like `require('./foo.we')` or write inline element like `<element name="foo" src="./foo.we"></element>`.
@@ -150,4 +145,8 @@ div
 ```bash
 npm run test
 ```
-will run mocha testing
+will run mocha testing.
+
+And you can check the specs in `test/spec` folder.
+
+
