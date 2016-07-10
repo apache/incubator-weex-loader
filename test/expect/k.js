@@ -1,7 +1,7 @@
 {
   "@weex-component/215a3c96c2c3802f228bf7ceec470c73": {
-    "ready": "function ready() {\n\t    _modal2.default.toast({ 'message': 'ready' });\n\t}",
-    "data": "function data() {\n\t    return {\n\t        hi: 'Hello',\n\t        name: 'Weex'\n\t    };\n\t}",
+    "ready": "function ready() {\n\t        _modal2.default.toast({ 'message': 'ready' });\n\t    }",
+    "data": "function data() {\n\t        return {\n\t            hi: 'Hello',\n\t            name: 'Weex'\n\t        };\n\t    }",
     "template": {
       "type": "div",
       "classList": [

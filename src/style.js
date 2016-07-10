@@ -16,9 +16,7 @@ module.exports = function (source) {
       if (log && log.length) {
         logWarn(this, log)
       }
-      return `module.exports = ${parsed}\n`
-    }).then(result => {
-      callback(null, result)
+      callback(null, parsed)
     }).catch(e => {
       callback(e, '')
     })

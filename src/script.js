@@ -1,5 +1,5 @@
 import {
-    parseScript
+  parseScript
 } from './parser'
 
 module.exports = function (source) {
@@ -8,27 +8,29 @@ module.exports = function (source) {
   const callback = this.async()
 
   parseScript(source)
-        .then(({ parsed }) => {
-          let requireList = parsed.match(/require\([^()]+?\)/g)
+    .then(({
+      parsed
+    }) => {
+      let requireList = parsed.match(/require\([^()]+?\)/g)
 
-          if (requireList && requireList.length > 0) {
-            requireList = requireList.filter(str => {
-              if (str.indexOf('@weex-module') < 0) {
-                parsed = parsed.replace(str, '')
-                return true
-              }
-              return false
-            }).join('\n')
+      if (requireList && requireList.length > 0) {
+        requireList = requireList.filter(str => {
+          if (str.indexOf('@weex-module') < 0) {
+            parsed = parsed.replace(str, '')
+            return true
           }
+          return false
+        }).join('\n')
+      }
 
-          const result = `
+      const result = `
 ${requireList || ''}
 module.exports = function(require, exports, module){
-    ${parsed}
+${parsed}
 }
 `
-          callback(null, result)
-        }).catch(e => {
-          callback(e, '')
-        })
+      callback(null, result)
+    }).catch(e => {
+      callback(e, '')
+    })
 }

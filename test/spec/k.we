@@ -31,14 +31,16 @@
 <script>
 import modal from '@weex-module/modal'
 
-export function ready() {
-    modal.toast({'message': 'ready'})
-}
+export default {
+    ready() {
+        modal.toast({'message': 'ready'})
+    },
 
-export function data() {
-    return {
-        hi: 'Hello',
-        name: 'Weex'
+    data() {
+        return {
+            hi: 'Hello',
+            name: 'Weex'
+        }
     }
 }
 </script>

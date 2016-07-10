@@ -19,13 +19,11 @@ module.exports = function (source) {
   extractBlocks(source, type)
     .then(result => {
       if (index != null) {
-        return result[index].content
+        result = result[index]
       }
-      else {
-        return result.content
-      }
-    }).then(result => {
-      callback(null, result)
+      return result.content
+    }).then(content => {
+      callback(null, content)
     }).catch(e => {
       callback(e, '')
     })

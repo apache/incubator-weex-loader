@@ -11,7 +11,7 @@ npm install weex-loader babel-loader babel-preset-es2015 babel-runtime babel-plu
 ## Feature
 
 0. Can load `.we` file.
-1. Can load parted files(`.js/.css/.html`) via a `src` attribute.
+1. Can load parted files(`.js/.css/.html`) via `src` attribute.
 2. Can specify a custom language to chain any loader.
 3. Can specify name when require `.we` file.
 4. Can write es2015 in script.
@@ -45,42 +45,14 @@ module.exports = {
 
 ### How to write parted files
 
-#### write .js/.css/.html anywhere
-
-**main.js as script**
-```javascript
-module.exports = {
-    data: function () {
-      return {
-        text: 'Hello World'
-      }
-    }
-}
-```
-
-**main.css as style**
-```css
-.h1 {
-    font-size: 60px;
-    color: red;
-}
-```
-
-**main.html as template**
-```html
-<div>
-    <text class="h1">{{text}}</text>
-</div>
-```
-
-**main.we**
+**specify `src` attribute**
 ```html
 <template src="./main.html"></template>
 <style src="./main.css"></style>
 <script src="./main.js"></script>
 ```
 
-#### add some custom language for loaders
+### add some custom language for loaders
 
 **append a weex config in webpack config**
 ```javascript
@@ -131,12 +103,12 @@ div
 <template>
   <div>
     <fooo></fooo>
-    <barr></barr>
+    <baar></baar>
   </div>
 </template>
 
 <script>
-  require('./bar.we?name=barr')
+  require('./bar.we?name=baar')
 </script>
 ```
 

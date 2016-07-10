@@ -5,6 +5,7 @@ import md5 from 'md5'
 
 import * as config from './config'
 import * as legacy from './legacy'
+
 import {
   parseFragment
 } from './parser'
@@ -62,6 +63,8 @@ function getLoaderString (type, config) {
 
   if (type === 'template') {
     loaders = [{
+      name: defaultLoaders.json
+    }, {
       name: defaultLoaders.template
     }]
     if (customLoader) {
@@ -89,6 +92,8 @@ function getLoaderString (type, config) {
 
   if (type === 'style') {
     loaders = [{
+      name: defaultLoaders.json
+    }, {
       name: defaultLoaders.style
     }]
     if (customLoader) {
@@ -186,7 +191,6 @@ function getLoaderString (type, config) {
 
 function loader (source) {
   this.cacheable && this.cacheable()
-
   const options = this.options.weex || {}
   const customLang = options.lang || {}
 
@@ -345,10 +349,12 @@ __weex_define__('@weex-component/${name}', [], function(__weex_require__, __weex
 ` + (
   frag.script.length > 0 ? `
     __weex_script__(__weex_require__, __weex_exports__, __weex_module__)
+    if (__weex_exports__.__esModule && __weex_exports__.default) {
+      __weex_module__.exports = __weex_exports__.default
+    }
 ` : ''
 ) +
 `
-    __weex_module__.exports = __weex_module__.exports || {}
     __weex_module__.exports.template = __weex_template__
 ` + (
   frag.style.length > 0 ? `
