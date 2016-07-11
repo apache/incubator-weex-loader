@@ -26,6 +26,7 @@ export class ScriptMap {
     const current = this.current
     this.current = {}
 
+    // re-order the elements and scripts into history
     const length = current.elements.length
     if (length > 0) {
       const children = this.history.splice(-length, length)
@@ -50,10 +51,12 @@ export class ScriptMap {
     if (!this.enabled) { return }
     this.current.elements.push({ name, index, line, length })
   }
+
   addScript (name, info, externalOffset) {
     if (!this.enabled) { return }
     this.current.scripts.push({ name, info, externalOffset })
   }
+
   setElementPosition (name, line, column) {
     if (!this.enabled) { return }
     this.elements[name] = { line, column }
@@ -73,9 +76,9 @@ export class ScriptMap {
       const { original, generated } = info
       const scriptLength = info.length
       this.add(
-        original.line + (elInfo.line || 1) - 2,
+        original.line + (elInfo.line || 1) - 1,
         scriptLength,
-        generated.line + startLine + (line || 1) + externalOffset
+        generated.line + startLine + (line || 1) - 1 + externalOffset
       )
     });
 
