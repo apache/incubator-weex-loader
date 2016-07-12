@@ -3,7 +3,7 @@ var cssnext = require('postcss-cssnext')
 
 var entry = {}
 var start = 'a'
-var end = 'l'
+var end = 'm'
 var count = end.charCodeAt(0) - start.charCodeAt(0)
 
 new Array(count + 1).fill(0)

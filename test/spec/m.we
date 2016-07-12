@@ -1,0 +1,29 @@
+<template>
+    <div>
+        <text class="hello">Hello {{name}}</text>
+    </div>
+</template>
+
+
+<style>
+.hello {
+    font-size: 26px;
+    color: red;
+}
+</style>
+
+
+<script>
+var toast = require('./toast.js')
+
+module.exports = {
+    ready: function() {
+        toast(this.name)
+    },
+    data: function() {
+        return {
+            name: 'Weex'
+        }
+    }
+}
+</script>

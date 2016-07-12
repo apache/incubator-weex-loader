@@ -108,7 +108,7 @@ describe('build', () => {
     expect(bootstrapStub.firstCall.args[2]).is.not.undefined;
   });
 
-  it('template and require weex modules', () => {
+  it('template and use weex module', () => {
     expectActual('j');
     expect(requireStub.callCount).eql(1);
     expect(requireStub.firstCall.args).eql(['@weex-module/modal']);
@@ -120,8 +120,15 @@ describe('build', () => {
     expect(requireStub.firstCall.args).eql(['@weex-module/modal']);
   });
 
-  it('template and require commonjs modules', () => {
+  it('template and require commonjs module', () => {
     expectActual('l');
     expect(requireStub.callCount).eql(1);
+    expect(requireStub.firstCall.args).eql(['@weex-module/modal']);
+  });
+
+  it('template and use weex module in commonjs module', () => {
+    expectActual('m');
+    expect(requireStub.callCount).eql(1);
+    expect(requireStub.firstCall.args).eql(['@weex-module/modal']);
   });
 })
