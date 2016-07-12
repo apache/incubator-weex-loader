@@ -348,7 +348,7 @@ function loader (source) {
 __weex_define__('@weex-component/${name}', [], function(__weex_require__, __weex_exports__, __weex_module__) {
 ` + (
   frag.script.length > 0 ? `
-    __weex_script__(__weex_require__, __weex_exports__, __weex_module__)
+    __weex_script__(__weex_module__, __weex_exports__, __weex_require__)
     if (__weex_exports__.__esModule && __weex_exports__.default) {
       __weex_module__.exports = __weex_exports__.default
     }

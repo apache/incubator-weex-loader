@@ -89,16 +89,16 @@ describe('build', () => {
     expectActual('e');
   });
 
-  it('template via src', () => {
+  it('parted files specifed in src', () => {
     expectActual('f');
   });
 
-  it('template via requiring src and specifing alias', () => {
+  it('component by requiring src and specifing alias', () => {
     expectActual('g');
     expect(requireStub.callCount).eql(0);
   });
 
-  it('template by finding elements under same folder', () => {
+  it('component under same folder', () => {
     expectActual('h');
   });
 
@@ -118,5 +118,10 @@ describe('build', () => {
     expectActual('k');
     expect(requireStub.callCount).eql(1);
     expect(requireStub.firstCall.args).eql(['@weex-module/modal']);
+  });
+
+  it('template and require commonjs modules', () => {
+    expectActual('l');
+    expect(requireStub.callCount).eql(1);
   });
 })
