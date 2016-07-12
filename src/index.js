@@ -4,12 +4,14 @@ import {
   parseScript,
   parseStyle,
   parseTemplate,
-  parseWeexFile
+  parseWeex
 } from './parser'
+import { getFilenameByPath } from './util'
 import * as config from './config'
 import * as legacy from './legacy'
+import { ScriptMap } from './map'
 
-function partedLoader (type, loader, params, source) {
+function partedLoader (type, loader, params, source, map) {
   let promise
   switch (type) {
     case 'js':
@@ -29,7 +31,8 @@ function partedLoader (type, loader, params, source) {
       break
     case 'we':
     default:
-      promise = parseWeexFile(loader, params, source)
+      map.enable()
+      promise = parseWeex(loader, params, source, map)
       break
   }
   return promise
@@ -45,15 +48,23 @@ function loader (source) {
     resourcePath: this.resourcePath
   }
   const type = params.loaderQuery.type || 'we'
-  const promise = partedLoader(type, this, params, source)
+  const { resourcePath } = params
+  const filename = getFilenameByPath(resourcePath)
+  const map = new ScriptMap(filename, source)
+
+  const promise = partedLoader(type, this, params, source, map)
 
   promise.then(result => {
+    if (map.enabled) {
+      map.parse()
+    }
     if (type === 'style' || type === 'css' ||
       type === 'html' || type === 'tpl' || type === 'template') {
       result = 'module.exports=' + result
     }
-    callback(null, result)
+    callback(null, result, map.toJSON())
   }).catch(err => {
+    // console.error(err.stack)
     this.emitError(err.toString())
     callback(err.toString(), '')
   })

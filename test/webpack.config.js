@@ -2,6 +2,7 @@ var path = require('path')
 
 module.exports = {
   entry: {
+    sourcemap: path.resolve(__dirname, 'expect/sourcemap.we?entry=true'),
     a: path.resolve(__dirname, 'a.js?entry=true'),
     b: path.resolve(__dirname, 'expect/b.we?entry=true'),
     z: path.resolve(__dirname, 'expect/z.we?entry=true')
@@ -10,6 +11,7 @@ module.exports = {
     path: path.resolve(__dirname, 'actual'),
     filename: '[name].js'
   },
+  devtool: 'source-map',
   module: {
     loaders: [
       {
