@@ -1,5 +1,5 @@
 {
-  "@weex-component/eebf10d54335bc996c5229787ede33eb": {
+  "@weex-component/a0ca0f35aa865d928da5cb31115674de": {
     "template": {
       "type": "div",
       "children": [

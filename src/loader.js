@@ -199,7 +199,8 @@ function loader (source) {
   const resourcePath = this.resourcePath
   const isElement = loaderQuery.element
   const isEntry = resourceQuery.entry
-  const name = isEntry ? md5(resourcePath) :
+  const filename = path.relative('.', resourcePath)
+  const name = isEntry ? md5(filename) :
                           (resourceQuery.name ||
                             getNameByPath(resourcePath))
 

@@ -1,5 +1,5 @@
 {
-  "@weex-component/5f2196e6aad549d5070457fadf5d4cc0": {
+  "@weex-component/192c464938a57dbd89308b3f2aaa0b18": {
     "data": "function data() {\n\t        return {\n\t            name: 'Weex'\n\t        };\n\t    }",
     "template": {
       "type": "div",

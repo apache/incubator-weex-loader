@@ -1,5 +1,5 @@
 {
-  "@weex-component/77db11e29e85b11856342d968781883e": {
+  "@weex-component/b88790ebbe39cc44c23e81e6ef2a07e2": {
     "ready": "function ready() {\n\t        modal.toast({ message: this.name });\n\t    }",
     "data": "function data() {\n\t        return {\n\t            name: getName()\n\t        };\n\t    }",
     "template": {
