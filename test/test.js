@@ -129,4 +129,23 @@ describe('loader', () => {
     checkPos(/console\.log\(9\)/)
     checkPos(/console\.log\(0\)/)
   })
+
+  it('exports case', function() {
+    var name = 'exports.js';
+
+    var actualCodePath = path.resolve(__dirname, 'actual', name);
+    var actualCodeContent = fs.readFileSync(actualCodePath, { encoding: 'utf8' });
+
+    var expectCodePath = path.resolve(__dirname, 'expect', name);
+    var expectCodeContent = fs.readFileSync(expectCodePath, { encoding: 'utf8' });
+
+
+    var actualResult = createInstance('actual/' + name, actualCodeContent);
+    var actualJson = getRoot('actual/' + name);
+
+    var expectResult = createInstance('expect/' + name, expectCodeContent);
+    var expectJson = getRoot('expect/' + name);
+
+    expect(actualJson).eql(expectJson);
+  });
 })

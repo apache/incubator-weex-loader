@@ -3,6 +3,7 @@ var path = require('path')
 module.exports = {
   entry: {
     sourcemap: path.resolve(__dirname, 'expect/sourcemap.we?entry=true'),
+    exports: path.resolve(__dirname, 'expect/exports.we?entry=true'),
     a: path.resolve(__dirname, 'a.js?entry=true'),
     b: path.resolve(__dirname, 'expect/b.we?entry=true'),
     z: path.resolve(__dirname, 'expect/z.we?entry=true')
@@ -26,15 +27,15 @@ module.exports = {
         loaders: ['index.js?type=script', 'babel?presets[]=es2015']
       },
       {
-        test: /\.css(\?[^?]+)?$/, 
+        test: /\.css(\?[^?]+)?$/,
         loaders: ['index.js?type=style']
       },
       {
-        test: /\.less(\?[^?]+)?$/, 
+        test: /\.less(\?[^?]+)?$/,
         loaders: ['index.js?type=style', 'less']
       },
       {
-        test: /\.tpl(\?[^?]+)?$/, 
+        test: /\.tpl(\?[^?]+)?$/,
         loaders: ['index.js?type=tpl']
       }
     ]
