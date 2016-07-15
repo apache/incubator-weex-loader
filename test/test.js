@@ -81,6 +81,16 @@ describe('loader', () => {
     expect(actualJson).eql(expectJson);
   });
 
+  it('ignore include same name element file', function() {
+    var name = 'samename.js';
+
+    var actualCodePath = path.resolve(__dirname, 'actual', name);
+    var actualCodeContent = fs.readFileSync(actualCodePath, { encoding: 'utf8' });
+
+    var matches = actualCodeContent.match(/"type"\: "samename"/g)
+    expect(matches.length).eql(1);
+  });
+
   it('support source map', function() {
     var name = 'sourcemap'
 

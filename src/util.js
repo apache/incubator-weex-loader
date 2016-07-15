@@ -44,3 +44,7 @@ export function checkFileExist (name, resourcePath) {
 export function depHasRequired (content, dep) {
   return !content.match(new RegExp('require\\(["\']./' + path.basename(dep) + '(.we)?["\']\\)', 'g'))
 }
+
+export function parseElementNameByPath (filepath) {
+  return path.parse(filepath).name
+}

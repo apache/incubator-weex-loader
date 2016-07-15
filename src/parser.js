@@ -14,6 +14,7 @@ import {
   getNameByPath,
   checkFileExist,
   depHasRequired,
+  parseElementNameByPath,
   stringifyFunction,
   appendToWarn
 } from './util'
@@ -121,7 +122,14 @@ function parseBlocks (loader, params, map, elementName) {
 
     let requireContent = ''
     if (deps.length) {
-      requireContent += deps.map(dep =>
+      const entryElementName = parseElementNameByPath(params.resourcePath)
+      requireContent += deps.filter(dep => {
+        if (parseElementNameByPath(dep) === entryElementName) {
+          console.warn(`[Warn]: "${dep}" cannot include <${entryElementName}> itself.`)
+          return false
+        }
+        return true
+      }).map(dep =>
         depHasRequired(content, dep) ? 'require("' + dep + '");' : ''
       ).join('\n')
       if (requireContent) {
@@ -255,4 +263,3 @@ export function parseScript (loader, params, source, env) {
 
   return Promise.resolve(prefix + target)
 }
-
