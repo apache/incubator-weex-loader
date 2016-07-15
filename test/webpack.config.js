@@ -4,6 +4,7 @@ module.exports = {
   entry: {
     sourcemap: path.resolve(__dirname, 'expect/sourcemap.we?entry=true'),
     samename: path.resolve(__dirname, 'expect/samename.we?entry=true'),
+    exports: path.resolve(__dirname, 'expect/exports.we?entry=true'),
     a: path.resolve(__dirname, 'a.js?entry=true'),
     b: path.resolve(__dirname, 'expect/b.we?entry=true'),
     z: path.resolve(__dirname, 'expect/z.we?entry=true')

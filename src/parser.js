@@ -240,7 +240,7 @@ export function parseScript (loader, params, source, env) {
       .replace(MODULE_EXPORTS_REG, '__weex_module__.exports')
       .replace(REQUIRE_REG, '__weex_require__($1$2$1)')
   target = ';__weex_define__("@weex-component/' + name + '", [], ' +
-      'function(__weex_require__, __weex_exports__, __weex_module__)' +
+      'function(__weex_require__, exports, __weex_module__)' +
       '{\n' + target + '\n})'
 
   // record mapOffset into sourcemap

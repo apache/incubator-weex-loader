@@ -1,0 +1,11 @@
+<template>
+  <div>
+    <text>{{foo}}</text>
+  </div>
+</template>
+
+<script>
+  exports.data = {
+    foo: 'Hello'
+  }
+</script>
