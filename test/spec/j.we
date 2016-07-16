@@ -12,13 +12,13 @@
 </style>
 
 <script>
-var modal = require('@weex-module/modal')
+import modal from '@weex-module/modal'
 
-module.exports = {
-    ready: function() {
+export default {
+    ready() {
         modal.toast({'message': 'ready'})
     },
-    data: function() {
+    data() {
         return {
             hi: 'Hello',
             name: 'Weex'

@@ -14,18 +14,16 @@
 
 
 <script>
-var modal = require('@weex-module/modal')
-var getName = require('./getName.js')
+import modal from '@weex-module/modal'
+import getName from './getName.js'
 
+export function ready() {
+    modal.toast({message: this.name})
+}
 
-module.exports = {
-    ready: function() {
-        modal.toast({message: this.name})
-    },
-    data: function() {
-        return {
-            name: getName()
-        }
+export function data() {
+    return {
+        name: getName()
     }
 }
 </script>

@@ -1,7 +1,7 @@
 {
   "@weex-component/b88790ebbe39cc44c23e81e6ef2a07e2": {
-    "ready": "function ready() {\n\t        modal.toast({ message: this.name });\n\t    }",
-    "data": "function data() {\n\t        return {\n\t            name: getName()\n\t        };\n\t    }",
+    "ready": "function ready() {\n\t    _modal2.default.toast({ message: this.name });\n\t}",
+    "data": "function data() {\n\t    return {\n\t        name: (0, _getName2.default)()\n\t    };\n\t}",
     "template": {
       "type": "div",
       "children": [

@@ -1,0 +1,37 @@
+<element name="hi">
+<template>
+    <div><text class="hi">{{hi}}</text></div>
+</template>
+
+<style>
+.hi {
+    font-size: 26px;
+    color: green;
+}
+</style>
+
+<script>
+export default {
+    data() {
+        console.log('Hi Component Comment')
+        return {
+            hi: ''
+        }
+    }
+}
+</script>
+</element>
+
+<element name="name" src="./name.we"></element>
+
+<template src="./f.html"></template>
+<style src="./f.css"></style>
+<script>
+export function data() {
+    console.log('N comment')
+    return {
+        hi: 'Hello',
+        name: 'Weex'
+    }
+}
+</script>

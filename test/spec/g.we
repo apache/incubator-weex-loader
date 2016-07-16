@@ -14,10 +14,10 @@
 </style>
 
 <script>
-require('./hi.we?name=hi1')
+import './hi.we?name=hi1'
 
-module.exports = {
-    data: function() {
+export default {
+    data() {
         return {
             hi: 'Hello',
             name: 'Weex'

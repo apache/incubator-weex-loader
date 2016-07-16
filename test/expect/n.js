@@ -1,6 +1,6 @@
 {
   "@weex-component/hi": {
-    "data": "function data() {\n\t        return {\n\t            hi: ''\n\t        };\n\t    }",
+    "data": "function data() {\n\t        console.log('Hi Component Comment');\n\t        return {\n\t            hi: ''\n\t        };\n\t    }",
     "template": {
       "type": "div",
       "children": [
@@ -23,7 +23,7 @@
     }
   },
   "@weex-component/name": {
-    "data": "function data() {\n\t        return {\n\t            name: ''\n\t        };\n\t    }",
+    "data": "function data() {\n\t        console.log('Name Component Comment');\n\t        return {\n\t            name: ''\n\t        };\n\t    }",
     "template": {
       "type": "div",
       "children": [
@@ -45,13 +45,13 @@
       }
     }
   },
-  "@weex-component/3f7bb5c2b95329dedd5cb4556f4df361": {
-    "data": "function data() {\n\t    return {\n\t        hi: 'Hello',\n\t        name: 'Weex'\n\t    };\n\t}",
+  "@weex-component/57a447a57bba51ef8a7697040ca71e75": {
+    "data": "function data() {\n\t    console.log('N comment');\n\t    return {\n\t        hi: 'Hello',\n\t        name: 'Weex'\n\t    };\n\t}",
     "template": {
       "type": "div",
-      "style": {
-        "flexDirection": "row"
-      },
+      "classList": [
+        "wrap"
+      ],
       "children": [
         {
           "type": "hi",
@@ -66,6 +66,11 @@
           }
         }
       ]
+    },
+    "style": {
+      "wrap": {
+        "flexDirection": "row"
+      }
     }
   }
 }

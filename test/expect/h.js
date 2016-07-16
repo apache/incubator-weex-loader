@@ -23,7 +23,7 @@
     }
   },
   "@weex-component/name": {
-    "data": "function data() {\n\t        return {\n\t            name: ''\n\t        };\n\t    }",
+    "data": "function data() {\n\t        console.log('Name Component Comment');\n\t        return {\n\t            name: ''\n\t        };\n\t    }",
     "template": {
       "type": "div",
       "children": [

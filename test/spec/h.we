@@ -12,8 +12,8 @@
 </style>
 
 <script>
-module.exports = {
-    data: function() {
+export default {
+    data() {
         return {
             hi: 'Hello',
             name: 'Weex'

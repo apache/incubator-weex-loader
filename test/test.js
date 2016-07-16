@@ -43,8 +43,8 @@ describe('build', () => {
     const fn = new Function('__weex_define__', '__weex_bootstrap__', actualStr);
     fn(__weex_define__, __weex_bootstrap__);
 
-    // const filepath = path.resolve(__dirname, 'expect', `${name}.js`);
-    // fs.writeFileSync(filepath, stringifyActual(components), 'utf-8');
+    const filepath = path.resolve(__dirname, 'expect', `${name}.js`);
+    fs.writeFileSync(filepath, stringifyActual(components), 'utf-8');
 
     const expectJSON = getExpectJSON(name);
     expect(JSON.parse(stringifyActual(components))).eql(expectJSON);
@@ -131,4 +131,8 @@ describe('build', () => {
     expect(requireStub.callCount).eql(1);
     expect(requireStub.firstCall.args).eql(['@weex-module/modal']);
   });
+
+  it('template with sourcemap', () => {
+    expectActual('n');
+  })
 })

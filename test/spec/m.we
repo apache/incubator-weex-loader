@@ -14,13 +14,13 @@
 
 
 <script>
-var toast = require('./toast.js')
+import toast from './toast.js'
 
-module.exports = {
-    ready: function() {
+export default {
+    ready() {
         toast(this.name)
     },
-    data: function() {
+    data() {
         return {
             name: 'Weex'
         }

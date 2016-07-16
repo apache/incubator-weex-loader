@@ -28,19 +28,16 @@
     }
 </style>
 
-<script>
-import modal from '@weex-module/modal'
+<script lang="coffee">
+modal = require '@weex-module/modal'
 
-export default {
-    ready() {
+module.exports = 
+    ready: () -> 
         modal.toast({'message': 'ready'})
-    },
 
-    data() {
+    data: () ->
         return {
             hi: 'Hello',
             name: 'Weex'
         }
-    }
-}
 </script>

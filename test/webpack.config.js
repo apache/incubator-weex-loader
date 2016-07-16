@@ -3,7 +3,7 @@ var cssnext = require('postcss-cssnext')
 
 var entry = {}
 var start = 'a'
-var end = 'm'
+var end = 'n'
 var count = end.charCodeAt(0) - start.charCodeAt(0)
 
 new Array(count + 1).fill(0)
@@ -23,9 +23,14 @@ module.exports = {
       {
         test: /\.we(\?[^?]+)?$/,
         loaders: ['lib/loader.js']
+      },
+      {
+        test: /\.js/,
+        loaders: ['babel?presets[]=es2015']
       }
     ]
   },
+  devtool: 'source-map',
   resolveLoader: {
     modulesDirectories: ['./', './node_modules']
   },
@@ -37,7 +42,8 @@ module.exports = {
   weex: {
     lang: {
       cssnext: ['postcss'],
-      jade: ['jade-html']
+      jade: ['jade-html'],
+      coffee: ['coffee']
     }
   }
 }

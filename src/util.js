@@ -1,10 +1,18 @@
 import path from 'path'
 import loaderUtils from 'loader-utils'
+import hash from 'hash-sum'
+import { SourceMapGenerator } from 'source-map'
 
 import * as config from './config'
 
-export function getNameByPath (filepath) {
-  return path.basename(filepath).replace(/\..*$/, '')
+export function getNameByPath (resourcePath) {
+  return path.basename(resourcePath).replace(/\..*$/, '')
+}
+
+export function getFileNameWithHash (resourcePath, content) {
+  const filename = path.relative('.', resourcePath)
+  const cacheKey = hash(filename + content)
+  return `${filename}?${cacheKey}`
 }
 
 export const FUNC_START = '#####FUN_S#####'
@@ -63,4 +71,25 @@ export function stringifyLoaders (loaders) {
       return `${name}${query.length ? ('?' + query.join('&')) : ''}`
     }
   }).join('!')
+}
+
+export function generateMap (loader, source, iterator) {
+  const fileNameWithHash = getFileNameWithHash(loader.resourcePath)
+  const map = new SourceMapGenerator()
+  map.setSourceContent(fileNameWithHash, source)
+
+  for (const { original, generated } of iterator) {
+    map.addMapping({
+      source: fileNameWithHash,
+      original,
+      generated
+    })
+  }
+
+  return map
+}
+
+const LINE_REG = /\r?\n/g
+export function splitSourceLine (source) {
+  return source.split(LINE_REG)
 }

@@ -1,4 +1,5 @@
 node_modules
 lib
 test/actual/*.js
+test/actual/*.map
 *.log

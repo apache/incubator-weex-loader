@@ -38,11 +38,9 @@
 
 
 <script>
-module.exports = {
-    data: function() {
-        return {
-            name: 'Weex'
-        }
+export function data() {
+    return {
+        name: 'Weex'
     }
 }
 </script>
