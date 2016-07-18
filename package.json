@@ -1,6 +1,6 @@
 {
   "name": "weex-loader",
-  "version": "0.2.1",
+  "version": "0.2.3",
   "description": "a webpack loader for weex",
   "main": "index.js",
   "author": "terrykingcha <terrykingcha@gmail.com>",

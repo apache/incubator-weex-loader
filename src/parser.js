@@ -14,6 +14,7 @@ import {
   getNameByPath,
   checkFileExist,
   depHasRequired,
+  parseElementNameByPath,
   stringifyFunction,
   appendToWarn
 } from './util'
@@ -121,7 +122,14 @@ function parseBlocks (loader, params, map, elementName) {
 
     let requireContent = ''
     if (deps.length) {
-      requireContent += deps.map(dep =>
+      const entryElementName = parseElementNameByPath(params.resourcePath)
+      requireContent += deps.filter(dep => {
+        if (parseElementNameByPath(dep) === entryElementName) {
+          console.warn(`[Warn]: "${dep}" cannot include <${entryElementName}> itself.`)
+          return false
+        }
+        return true
+      }).map(dep =>
         depHasRequired(content, dep) ? 'require("' + dep + '");' : ''
       ).join('\n')
       if (requireContent) {
@@ -232,7 +240,7 @@ export function parseScript (loader, params, source, env) {
       .replace(MODULE_EXPORTS_REG, '__weex_module__.exports')
       .replace(REQUIRE_REG, '__weex_require__($1$2$1)')
   target = ';__weex_define__("@weex-component/' + name + '", [], ' +
-      'function(__weex_require__, __weex_exports__, __weex_module__)' +
+      'function(__weex_require__, exports, __weex_module__)' +
       '{\n' + target + '\n})'
 
   // record mapOffset into sourcemap
@@ -255,4 +263,3 @@ export function parseScript (loader, params, source, env) {
 
   return Promise.resolve(prefix + target)
 }
-
