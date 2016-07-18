@@ -191,6 +191,7 @@ function getLoaderString (type, config) {
 
 function loader (source) {
   this.cacheable && this.cacheable()
+
   const options = this.options.weex || {}
   const customLang = options.lang || {}
 

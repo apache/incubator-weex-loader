@@ -39,6 +39,7 @@
     "eslint": "^2.13.1",
     "jade": "^1.11.0",
     "jade-html-loader": "0.0.3",
+    "js-base64": "^2.1.9",
     "mocha": "^2.4.5",
     "parse5": "^2.1.5",
     "postcss-cssnext": "^2.7.0",

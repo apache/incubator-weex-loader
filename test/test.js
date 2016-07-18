@@ -9,6 +9,10 @@ const sinonChai = require('sinon-chai');
 const expect = chai.expect;
 chai.use(sinonChai);
 
+const Base64 = require('js-base64').Base64;
+const SourceMap = require('source-map');
+
+
 
 function getActualString(name) {
   const filepath = path.resolve(__dirname, 'actual', `${name}.js`);
@@ -31,6 +35,13 @@ function stringifyActual(json) {
   }, '  ');
 }
 
+function extractMap(actualStr) {
+  const mapStr = actualStr.match(/\/\/\# sourceMappingURL=data:application\/json;charset=utf-8;base64,([0-9a-zA-Z=+\/]+)/)
+  if (mapStr) {
+    return JSON.parse(Base64.decode(mapStr[1]));
+  }
+}
+
 describe('build', () => {
   let __weex_define__;
   let __weex_bootstrap__;
@@ -43,12 +54,14 @@ describe('build', () => {
     const fn = new Function('__weex_define__', '__weex_bootstrap__', actualStr);
     fn(__weex_define__, __weex_bootstrap__);
 
-    const filepath = path.resolve(__dirname, 'expect', `${name}.js`);
-    fs.writeFileSync(filepath, stringifyActual(components), 'utf-8');
+    // const filepath = path.resolve(__dirname, 'expect', `${name}.js`);
+    // fs.writeFileSync(filepath, stringifyActual(components), 'utf-8');
 
     const expectJSON = getExpectJSON(name);
     expect(JSON.parse(stringifyActual(components))).eql(expectJSON);
     expect(components).to.include.keys(__weex_bootstrap__.firstCall.args[0]);
+
+    return actualStr;
   }
 
   beforeEach(() => {
@@ -132,7 +145,20 @@ describe('build', () => {
     expect(requireStub.firstCall.args).eql(['@weex-module/modal']);
   });
 
-  it('template with sourcemap', () => {
-    expectActual('n');
-  })
+  it.skip('template with sourcemap', () => {
+    const actualStr = expectActual('n');
+    const map = extractMap(actualStr);
+    const smc = new SourceMap.SourceMapConsumer(map);
+
+    // new Array(276).fill(0).forEach((n, i) => {
+    //   i = i + 1
+    //   const original = smc.originalPositionFor({
+    //     line: i,
+    //     column: 0
+    //   })
+    //   if (original.source) {
+    //     console.log(i, original.line, original.source)
+    //   }
+    // })
+  });
 })

@@ -30,7 +30,7 @@ module.exports = {
       }
     ]
   },
-  devtool: 'source-map',
+  devtool: 'inline-source-map',
   resolveLoader: {
     modulesDirectories: ['./', './node_modules']
   },

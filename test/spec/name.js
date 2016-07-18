@@ -1,5 +1,5 @@
-module.exports = {
-    data: function() {
+export default {
+    data() {
         console.log('Name Component Comment')
         return {
             name: ''

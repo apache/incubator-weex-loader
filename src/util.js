@@ -1,7 +1,10 @@
 import path from 'path'
 import loaderUtils from 'loader-utils'
 import hash from 'hash-sum'
-import { SourceMapGenerator } from 'source-map'
+import {
+  SourceMapGenerator,
+  SourceMapConsumer
+} from 'source-map'
 
 import * as config from './config'
 
@@ -12,7 +15,7 @@ export function getNameByPath (resourcePath) {
 export function getFileNameWithHash (resourcePath, content) {
   const filename = path.relative('.', resourcePath)
   const cacheKey = hash(filename + content)
-  return `${filename}?${cacheKey}`
+  return `./${filename}?${cacheKey}`
 }
 
 export const FUNC_START = '#####FUN_S#####'
@@ -74,8 +77,15 @@ export function stringifyLoaders (loaders) {
 }
 
 export function generateMap (loader, source, iterator) {
-  const fileNameWithHash = getFileNameWithHash(loader.resourcePath)
-  const map = new SourceMapGenerator()
+  const filePath = loader.resourcePath
+
+  const fileNameWithHash = getFileNameWithHash(filePath)
+  const sourceRoot = path.resolve('.')
+
+  const map = new SourceMapGenerator({
+    sourceRoot,
+    skipValidation: true
+  })
   map.setSourceContent(fileNameWithHash, source)
 
   for (const { original, generated } of iterator) {
@@ -89,7 +99,59 @@ export function generateMap (loader, source, iterator) {
   return map
 }
 
+export function consumeMap (loader, target, map) {
+  const smc = new SourceMapConsumer(map)
+  let source
+  const original = []
+  const generated = []
+  const mapping = {}
+
+  splitSourceLine(target)
+    .forEach((input, line) => {
+      const column = 0
+      line = line + 1
+
+      const pos = smc.originalPositionFor({
+        line,
+        column
+      })
+
+      if (pos.source) {
+        source = pos.source
+        original.push({
+          line: pos.line,
+          column: pos.column
+        })
+        generated.push({
+          line,
+          column
+        })
+        mapping[`line-${line}-column-${column}`] = {
+          line: pos.line,
+          column: pos.column
+        }
+      }
+    })
+
+  return {
+    source,
+    original,
+    generated,
+    mapping,
+    sourcesContent: smc.sourcesContent
+  }
+}
+
 const LINE_REG = /\r?\n/g
 export function splitSourceLine (source) {
   return source.split(LINE_REG)
+}
+
+export function printSourceWithLine (source) {
+  console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
+  source = splitSourceLine(source)
+              .map((input, line) => {
+                console.log(line + 1 + ':', input)
+              })
+  console.log('<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<')
 }

@@ -8,13 +8,13 @@ A webpack loader for Weex.
 npm install weex-loader babel-loader babel-preset-es2015 babel-runtime babel-plugin-transform-runtime --save
 ```
 
-## Feature
+## Features
 
 0. Can load `.we` file.
-1. Can load parted files(`.js/.css/.html`) via `src` attribute.
-2. Can specify a custom language to chain any loader.
-3. Can specify name when require `.we` file.
-4. Can write es2015 in script.
+0. Can load parted files(`.js/.css/.html`) via `src` attribute.
+0. Can specify a custom language to chain any loader.
+0. Can specify name when require `.we` file.
+0. Can write es2015 in script.
 
 ## Usage
 
@@ -22,14 +22,10 @@ npm install weex-loader babel-loader babel-preset-es2015 babel-runtime babel-plu
 
 **make a webpack config**
 ```javascript
-var path = require('path');
-var webpack = require('webpack');
-var loader = require('weex-loader');
-
 module.exports = {
-  entry: './test/main.we?entry',
+  entry: './main.we?entry',
   output: {
-    path: './test/actual',
+    path: './dist',
     filename: 'main.js'
   },
   module: {
@@ -120,5 +116,30 @@ npm run test
 will run mocha testing.
 
 And you can check the specs in `test/spec` folder.
+
+## Specs
+
+- [Build with single template tag](test/spec/a.we)
+- [Build with template and style tags](test/spec/b.we)
+- [Build with template/style/script tags](test/spec/c.we)
+- [Build with single element tag](test/spec/d.we)
+- [Build with multiple element tag](test/spec/e.we)
+- [Build from parted files specifed in `src` attr](test/spec/f.we)
+- [Manually Require component and specifies an alias name](test/spec/g.we)
+- [Automaticely require component under some folder](test/spec/h.we)
+- [Build with config/data tag](test/spec/i.we)
+- [Require weex module](test/spec/j.we)
+- [Build by using custom language](test/spec/k.we)
+- [Require commonjs module](test/spec/l.we)
+- [Require weex module in commonjs module](test/spec/m.we)
+- [Build with sourcemap(no test)](test/spec/n.we)
+
+## Knew Issues
+
+- [`Bug` Source Map Offset](https://github.com/webpack/webpack/issues/2145). Encoding to this problem, please use `devtool:"eval-source-map"` instead of `devtool:"source-map"`.
+- [`Bug` Can't set debugger breakpoint](#). I still don't know the reason, but you can debug with `debugger` keywords.
+
+
+
 
 
