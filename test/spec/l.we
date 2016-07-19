@@ -1,0 +1,29 @@
+<template>
+    <div>
+        <text class="hello">Hello {{name}}</text>
+    </div>
+</template>
+
+
+<style>
+.hello {
+    font-size: 26px;
+    color: red;
+}
+</style>
+
+
+<script>
+import modal from '@weex-module/modal'
+import getName from './getName.js'
+
+export function ready() {
+    modal.toast({message: this.name})
+}
+
+export function data() {
+    return {
+        name: getName()
+    }
+}
+</script>

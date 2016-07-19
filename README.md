@@ -5,16 +5,16 @@ A webpack loader for Weex.
 ## Install
 
 ```
-npm install weex-loader --save
+npm install weex-loader@0.3.0-alpha babel-loader babel-preset-es2015 babel-runtime babel-plugin-transform-runtime --save
 ```
 
-## Feature
+## Features
 
 0. Can load `.we` file.
-1. Can load parted files(`.js/.css/.tpl`) instead of one `.we` file.
-2. Can chain any loader you want when write parted files.
-3. Can require a CommonJS module.
-4. Can specify the name of a component.
+0. Can load parted files(`.js/.css/.html`) via `src` attribute.
+0. Can specify a custom language to chain any loader.
+0. Can specify name when require `.we` file.
+0. Can write es2015 in script.
 
 ## Usage
 
@@ -22,14 +22,10 @@ npm install weex-loader --save
 
 **make a webpack config**
 ```javascript
-var path = require('path');
-var webpack = require('webpack');
-var loader = require('weex-loader');
-
 module.exports = {
-  entry: './test/main.we?entry=true',
+  entry: './main.we?entry',
   output: {
-    path: './test/actual',
+    path: './dist',
     filename: 'main.js'
   },
   module: {
@@ -45,107 +41,71 @@ module.exports = {
 
 ### How to write parted files
 
-#### write .js/.css/.tpl anywhere
-
-**main.js as script**
-```javascript
-module.exports = {
-    data: {
-        text: 'Hello World'
-    }
-}
-
-module.exports.style = require('./main.css');
-module.exports.template = require('./main.tpl');
-```
-
-**main.css as style**
-```css
-.h1 {
-    font-size: 60px;
-    color: red;
-    padding-top: 20px;
-    padding-bottom: 20px;
-    padding-left: 20px;
-    padding-right: 20px;
-}
-```
-
-**main.tpl as template**
+**specify `src` attribute**
 ```html
-<container>
-    <text class="h1">{{text}}</text>
-</container>
+<template src="./main.html"></template>
+<style src="./main.css"></style>
+<script src="./main.js"></script>
 ```
 
-Then change the entry to `main.js` in `webpack.config.js`
+### add some custom language for loaders
 
-#### add some loader in webpack config
-
-**loader for script**
+**append a weex config in webpack config**
 ```javascript
-  {
-    test: /\.js(\?[^?]+)?$/,
-    loader: 'weex?type=script'
+  weex: {
+    lang: {
+      jade: ['jade-html'] // a jade langauge will chain "jade-html-loader"
+    }
   }
 ```
 
-**loader for style**
-```javascript
-  {
-    test: /\.css(\?[^?]+)?$/, 
-    loader: 'weex?type=style'
-  }
+**main.we**
+```
+<template lang="jade">
+div
+  text Hello Weex
+</template>
 ```
 
-**loader for template**
-```javascript
-  {
-    test: /\.tpl(\?[^?]+)?$/, 
-    loader: 'weex?type=tpl'
-  }
+### How to require `.we` file as component element
+
+0. first, require a `path/to/component.we` in `script` like `require('./foo.we')` or write inline element like `<element name="foo" src="./foo.we"></element>`.
+1. second, use it in `template` like `<foo></foo>`.
+
 ```
+<element name="foo" src="./foo.we"></element>
 
-### How to require a CommonJS module
+<template>
+  <div>
+    <foo></foo>
+    <bar></bar>
+  </div>
+</template>
 
-0. first, require a `path/to/module.js` in `script` like `var _ = require('lodash')`. 
-1. then use it in `script`.
-
-### How to embed a composed component
-
-0. first, require a `path/to/component.js` in `script` like `require('./sub.js')`.
-1. second, use it in `template` like `<sub></sub>`.
+<script>
+  require('./bar.we')
+</script>
+```
 
 ### How to specify the name of a component
 
 0. By default, the name is the basename without extname of component path.
-1. Give a name query in require request, like `require('./sub.js?name="goto"')`
-2. use the name in `template` like `<goto></goto>`.
+1. Give a name query in require request, like `require('./foo.we?name="fooo"')`. Or specify a name attribute in element, like `<element name="fooo" src="./foo.we" ></element>`
+2. use the name in `template` like `<fooo></fooo>`.
 
-## Chain your favorite loader
-
-For examples:
-
-### write ES2015
-
-Only your need is chain babel-loader before weex-loader.
-
-```javascript
-  {
-    test: /\.js(\?[^?]+)?$/,
-    loader: 'weex?type=script!babel?presets[]=es2015'
-  }
 ```
+<element name="fooo" src="./foo.we"></element>
 
-### write SCSS
+<template>
+  <div>
+    <fooo></fooo>
+    <baar></baar>
+  </div>
+</template>
 
-Only your need is chain scss loader before weex-loader.
-
-```javascript
-  {
-    test: /\.scss(\?[^?]+)?$/, 
-    loader: 'weex?type=style!scss'
-  }
+<script>
+  require('./bar.we?name=baar')
+</script>
 ```
 
 ## Test
@@ -153,9 +113,33 @@ Only your need is chain scss loader before weex-loader.
 ```bash
 npm run test
 ```
-will run mocha testing
+will run mocha testing.
 
-```bash
-npm run serve
-```
-then open `localhost:12581` on chrome, will run web testing
+And you can check the specs in `test/spec` folder.
+
+## Specs
+
+- [Build with single template tag](test/spec/a.we)
+- [Build with template and style tags](test/spec/b.we)
+- [Build with template/style/script tags](test/spec/c.we)
+- [Build with single element tag](test/spec/d.we)
+- [Build with multiple element tag](test/spec/e.we)
+- [Build from parted files specifed in `src` attr](test/spec/f.we)
+- [Manually Require component and specifies an alias name](test/spec/g.we)
+- [Automaticely require component under some folder](test/spec/h.we)
+- [Build with config/data tag](test/spec/i.we)
+- [Require weex module](test/spec/j.we)
+- [Build by using custom language](test/spec/k.we)
+- [Require commonjs module](test/spec/l.we)
+- [Require weex module in commonjs module](test/spec/m.we)
+- [Build with sourcemap(no test)](test/spec/n.we)
+
+## Knew Issues
+
+- [`Bug` Source Map Offset](https://github.com/webpack/webpack/issues/2145). Encoding to this problem, please use `devtool:"eval-source-map"` instead of `devtool:"source-map"`.
+- [`Bug` Can't set debugger breakpoint](#). I still don't know the reason, but you can debug with `debugger` keyword.
+
+
+
+
+

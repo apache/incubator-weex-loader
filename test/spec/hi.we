@@ -1,0 +1,20 @@
+<template>
+    <div><text class="hi">{{hi}}</text></div>
+</template>
+
+<style>
+.hi {
+    font-size: 26px;
+    color: green;
+}
+</style>
+
+<script>
+export default {
+    data() {
+        return {
+            hi: ''
+        }
+    }
+}
+</script>

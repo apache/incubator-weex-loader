@@ -1,14 +1,19 @@
 var path = require('path')
+var cssnext = require('postcss-cssnext')
+
+var entry = {}
+var start = 'a'
+var end = 'n'
+var count = end.charCodeAt(0) - start.charCodeAt(0)
+
+new Array(count + 1).fill(0)
+  .forEach((n, i) => {
+    var name = String.fromCharCode(i + start.charCodeAt(0))
+    entry[name] = path.resolve(__dirname, 'spec', name + '.we?entry')
+  })
 
 module.exports = {
-  entry: {
-    sourcemap: path.resolve(__dirname, 'expect/sourcemap.we?entry=true'),
-    samename: path.resolve(__dirname, 'expect/samename.we?entry=true'),
-    exports: path.resolve(__dirname, 'expect/exports.we?entry=true'),
-    a: path.resolve(__dirname, 'a.js?entry=true'),
-    b: path.resolve(__dirname, 'expect/b.we?entry=true'),
-    z: path.resolve(__dirname, 'expect/z.we?entry=true')
-  },
+  entry: entry,
   output: {
     path: path.resolve(__dirname, 'actual'),
     filename: '[name].js'
@@ -18,30 +23,28 @@ module.exports = {
     loaders: [
       {
         test: /\.we(\?[^?]+)?$/,
-        loaders: ['index.js']
+        loaders: ['lib/loader.js']
       },
       {
-        test: /\.js(\?[^?]+)?$/,
-        exclude: [
-          path.resolve(__dirname, 'lib')
-        ],
-        loaders: ['index.js?type=script', 'babel?presets[]=es2015']
-      },
-      {
-        test: /\.css(\?[^?]+)?$/,
-        loaders: ['index.js?type=style']
-      },
-      {
-        test: /\.less(\?[^?]+)?$/,
-        loaders: ['index.js?type=style', 'less']
-      },
-      {
-        test: /\.tpl(\?[^?]+)?$/,
-        loaders: ['index.js?type=tpl']
+        test: /\.js/,
+        loaders: ['babel?presets[]=es2015']
       }
     ]
   },
+  devtool: 'inline-source-map',
   resolveLoader: {
     modulesDirectories: ['./', './node_modules']
+  },
+  postcss: function() {
+    return [cssnext({
+      browsers: ['last 1 version']
+    })]
+  },
+  weex: {
+    lang: {
+      cssnext: ['postcss'],
+      jade: ['jade-html'],
+      coffee: ['coffee']
+    }
   }
 }

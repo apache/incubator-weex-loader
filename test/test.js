@@ -1,161 +1,164 @@
-var fs = require('fs');
-var path =require('path');
+'use strict';
 
-var chai = require('chai');
-var sinon = require('sinon');
-var sinonChai = require('sinon-chai');
-var expect = chai.expect;
+const fs = require('fs');
+const path =require('path');
+
+const chai = require('chai');
+const sinon = require('sinon');
+const sinonChai = require('sinon-chai');
+const expect = chai.expect;
 chai.use(sinonChai);
 
-var webpack = require('webpack')
-var SourceMapConsumer = require('source-map').SourceMapConsumer
-
-require('./lib/jsfm');
-var createInstance = global.createInstance;
-var getRoot = global.getRoot;
-
-describe('loader', () => {
-
-  before(function() {
-    global.callNative = sinon.spy();
-  });
-
-  after(function() {
-    global.callNative = undefined;
-  });
-
-  it('simple case', function() {
-    var name = 'a.js';
-
-    var actualCodePath = path.resolve(__dirname, 'actual', name);
-    var actualCodeContent = fs.readFileSync(actualCodePath, { encoding: 'utf8' });
-
-    var expectCodePath = path.resolve(__dirname, 'expect', name);
-    var expectCodeContent = fs.readFileSync(expectCodePath, { encoding: 'utf8' });
+const Base64 = require('js-base64').Base64;
+const SourceMap = require('source-map');
 
 
-    var actualResult = createInstance('actual/' + name, actualCodeContent);
-    var actualJson = getRoot('actual/' + name);
 
-    var expectResult = createInstance('expect/' + name, expectCodeContent);
-    var expectJson = getRoot('expect/' + name);
+function getActualString(name) {
+  const filepath = path.resolve(__dirname, 'actual', `${name}.js`);
+  const result = fs.readFileSync(filepath, 'utf-8');
+  return result.toString();
+} 
 
-    expect(actualJson).eql(expectJson);
-  });
+function getExpectJSON(name) {
+  const filepath = path.resolve(__dirname, 'expect', `${name}.js`);
+  const result = fs.readFileSync(filepath, 'utf-8');
+  return JSON.parse(result.toString());
+}
 
-  it('element tag, 3rd-party js, implicit component', function() {
-    var name = 'b.js';
+function stringifyActual(json) {
+  return JSON.stringify(json, function(key, value) {
+    if (typeof value === 'function') {
+      value = value.toString();
+    }
+    return value;
+  }, '  ');
+}
 
-    var actualCodePath = path.resolve(__dirname, 'actual', name);
-    var actualCodeContent = fs.readFileSync(actualCodePath, { encoding: 'utf8' });
+function extractMap(actualStr) {
+  const mapStr = actualStr.match(/\/\/\# sourceMappingURL=data:application\/json;charset=utf-8;base64,([0-9a-zA-Z=+\/]+)/)
+  if (mapStr) {
+    return JSON.parse(Base64.decode(mapStr[1]));
+  }
+}
 
-    var expectCodePath = path.resolve(__dirname, 'expect', name);
-    var expectCodeContent = fs.readFileSync(expectCodePath, { encoding: 'utf8' });
+describe('build', () => {
+  let __weex_define__;
+  let __weex_bootstrap__;
+  let components;
+  let requireStub;
+  let bootstrapStub;
 
+  function expectActual(name) {
+    const actualStr = getActualString(name);
+    const fn = new Function('__weex_define__', '__weex_bootstrap__', actualStr);
+    fn(__weex_define__, __weex_bootstrap__);
 
-    var actualResult = createInstance('actual/' + name, actualCodeContent);
-    var actualJson = getRoot('actual/' + name);
+    // const filepath = path.resolve(__dirname, 'expect', `${name}.js`);
+    // fs.writeFileSync(filepath, stringifyActual(components), 'utf-8');
 
-    var expectResult = createInstance('expect/' + name, expectCodeContent);
-    var expectJson = getRoot('expect/' + name);
+    const expectJSON = getExpectJSON(name);
+    expect(JSON.parse(stringifyActual(components))).eql(expectJSON);
+    expect(components).to.include.keys(__weex_bootstrap__.firstCall.args[0]);
 
-    expect(actualJson).eql(expectJson);
-  });
+    return actualStr;
+  }
 
-  it('with config & data case', function() {
-    var name = 'z.js';
+  beforeEach(() => {
+    components = {};
+    requireStub = sinon.stub();
+    bootstrapStub = sinon.stub();
 
-    var actualCodePath = path.resolve(__dirname, 'actual', name);
-    var actualCodeContent = fs.readFileSync(actualCodePath, { encoding: 'utf8' });
+    __weex_define__ = function(componentName, deps, factory) {
+      var __weex_require__ = requireStub;
+      var __weex_exports__ = {};
+      var __weex_module__ = {exports : __weex_exports__}
 
-    var expectCodePath = path.resolve(__dirname, 'expect', name);
-    var expectCodeContent = fs.readFileSync(expectCodePath, { encoding: 'utf8' });
-
-
-    var actualResult = createInstance('actual/' + name, actualCodeContent);
-    var actualJson = getRoot('actual/' + name);
-
-    var expectResult = createInstance('expect/' + name, expectCodeContent);
-    var expectJson = getRoot('expect/' + name);
-
-    expect(actualJson).eql(expectJson);
-  });
-
-  it('ignore include same name element file', function() {
-    var name = 'samename.js';
-
-    var actualCodePath = path.resolve(__dirname, 'actual', name);
-    var actualCodeContent = fs.readFileSync(actualCodePath, { encoding: 'utf8' });
-
-    var matches = actualCodeContent.match(/"type"\: "samename"/g)
-    expect(matches.length).eql(1);
-  });
-
-  it('support source map', function() {
-    var name = 'sourcemap'
-
-    var mapPath = path.resolve(__dirname, 'actual', name + '.js.map');
-    var map = fs.readFileSync(mapPath, { encoding: 'utf8' });
-    var smc = new SourceMapConsumer(JSON.parse(map))
-
-    var oriPath = path.resolve(__dirname, 'expect', name + '.we');
-    var ori = fs.readFileSync(oriPath, { encoding: 'utf8' });
-
-    var genPath = path.resolve(__dirname, 'actual', name + '.js');
-    var gen = fs.readFileSync(genPath, { encoding: 'utf8' });
-
-    function matchPos(code, regexp) {
-      var line, col
-      code.split(/\r?\n/g).some(function (l, i) {
-        if (regexp.test(l)) {
-          line = i + 1
-          col = l.length
-          return true
-        }
-      })
-      return { line: line, col: col }
+      factory(__weex_require__, __weex_exports__, __weex_module__)
+      components[componentName] = __weex_module__.exports
     }
 
-    function checkPos(regexp) {
-      var genPos = matchPos(gen, regexp)
-      var oriPos = matchPos(ori, regexp)
+    __weex_bootstrap__ = bootstrapStub;
 
-      var pos = smc.originalPositionFor({
-        line: genPos.line,
-        column: genPos.col
-      })
+  });
 
-      expect(pos.source.indexOf('sourcemap.we') > -1)
-      expect(pos.line).to.equal(oriPos.line)
-    }
+  it('single template', () => {
+    expectActual('a');
+  });
 
-    checkPos(/console\.log\(1\)/)
-    checkPos(/console\.log\(2\)/)
-    checkPos(/console\.log\(4\)/)
-    checkPos(/console\.log\(5\)/)
-    checkPos(/console\.log\(6\)/)
-    checkPos(/console\.log\(7\)/)
-    checkPos(/console\.log\(8\)/)
-    checkPos(/console\.log\(9\)/)
-    checkPos(/console\.log\(0\)/)
-  })
+  it('template with style', () => {
+    expectActual('b');
+  });
 
-  it('exports case', function() {
-    var name = 'exports.js';
+  it('template with style and script', () => {
+    expectActual('c');
+  });
 
-    var actualCodePath = path.resolve(__dirname, 'actual', name);
-    var actualCodeContent = fs.readFileSync(actualCodePath, { encoding: 'utf8' });
+  it('template with single inline element', () => {
+    expectActual('d');
+  });
 
-    var expectCodePath = path.resolve(__dirname, 'expect', name);
-    var expectCodeContent = fs.readFileSync(expectCodePath, { encoding: 'utf8' });
+  it('template with multiple inline elements', () => {
+    expectActual('e');
+  });
 
+  it('parted files specifed in src', () => {
+    expectActual('f');
+  });
 
-    var actualResult = createInstance('actual/' + name, actualCodeContent);
-    var actualJson = getRoot('actual/' + name);
+  it('component by requiring src and specifing alias', () => {
+    expectActual('g');
+    expect(requireStub.callCount).eql(0);
+  });
 
-    var expectResult = createInstance('expect/' + name, expectCodeContent);
-    var expectJson = getRoot('expect/' + name);
+  it('component under same folder', () => {
+    expectActual('h');
+  });
 
-    expect(actualJson).eql(expectJson);
+  it('template with config and data', () => {
+    expectActual('i');
+    expect(bootstrapStub.firstCall.args[1]).is.not.undefined;
+    expect(bootstrapStub.firstCall.args[2]).is.not.undefined;
+  });
+
+  it('template and use weex module', () => {
+    expectActual('j');
+    expect(requireStub.callCount).eql(1);
+    expect(requireStub.firstCall.args).eql(['@weex-module/modal']);
+  });
+
+  it('template by using custom language', () => {
+    expectActual('k');
+    expect(requireStub.callCount).eql(1);
+    expect(requireStub.firstCall.args).eql(['@weex-module/modal']);
+  });
+
+  it('template and require commonjs module', () => {
+    expectActual('l');
+    expect(requireStub.callCount).eql(1);
+    expect(requireStub.firstCall.args).eql(['@weex-module/modal']);
+  });
+
+  it('template and use weex module in commonjs module', () => {
+    expectActual('m');
+    expect(requireStub.callCount).eql(1);
+    expect(requireStub.firstCall.args).eql(['@weex-module/modal']);
+  });
+
+  it.skip('template with sourcemap', () => {
+    const actualStr = expectActual('n');
+    const map = extractMap(actualStr);
+    const smc = new SourceMap.SourceMapConsumer(map);
+
+    // new Array(276).fill(0).forEach((n, i) => {
+    //   i = i + 1
+    //   const original = smc.originalPositionFor({
+    //     line: i,
+    //     column: 0
+    //   })
+    //   if (original.source) {
+    //     console.log(i, original.line, original.source)
+    //   }
+    // })
   });
 })

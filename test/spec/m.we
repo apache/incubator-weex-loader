@@ -1,0 +1,29 @@
+<template>
+    <div>
+        <text class="hello">Hello {{name}}</text>
+    </div>
+</template>
+
+
+<style>
+.hello {
+    font-size: 26px;
+    color: red;
+}
+</style>
+
+
+<script>
+import toast from './toast.js'
+
+export default {
+    ready() {
+        toast(this.name)
+    },
+    data() {
+        return {
+            name: 'Weex'
+        }
+    }
+}
+</script>

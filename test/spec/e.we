@@ -1,0 +1,61 @@
+<element name="hi">
+    <template>
+        <div><text class="hi">{{hi}}</text></div>
+    </template>
+
+    <style>
+    .hi {
+        font-size: 26px;
+        color: green;
+    }
+    </style>
+
+    <script>
+    module.exports = {
+        data: function() {
+            return {
+                hi: ''
+            }
+        }
+    }
+    </script>
+</element>
+
+<element name="name">
+    <template>
+        <div><text class="name">{{name}}</text></div>
+    </template>
+
+    <style>
+    .name {
+        font-size: 26px;
+        color: red;
+    }
+    </style>
+
+    <script>
+    module.exports = {
+        data: function() {
+            return {
+                name: ''
+            }
+        }
+    }
+    </script>
+</element>
+
+<template>
+    <div style="flex-direction: row;">
+        <hi hi="{{hi}}"></hi>
+        <name name="{{name}}"></name>
+    </div>
+</template>
+
+<script>
+export function data() {
+    return {
+        hi: 'Hello',
+        name: 'Weex'
+    }
+}
+</script>

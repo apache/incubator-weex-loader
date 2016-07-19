@@ -1,0 +1,28 @@
+<template>
+    <div class="wrap">
+        <text>{{hi}}</text>
+        <text>{{name}}</text>
+    </div>
+</template>
+
+<style>
+    .wrap {
+        flex-direction: row;
+    }
+</style>
+
+<script>
+import modal from '@weex-module/modal'
+
+export default {
+    ready() {
+        modal.toast({'message': 'ready'})
+    },
+    data() {
+        return {
+            hi: 'Hello',
+            name: 'Weex'
+        }
+    }
+}
+</script>

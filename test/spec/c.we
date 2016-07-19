@@ -1,0 +1,22 @@
+<template>
+    <div>
+        <text class="hello">Hello {{name}}</text>
+    </div>
+</template>
+
+
+<style>
+.hello {
+    font-size: 26px;
+    color: red;
+}
+</style>
+
+
+<script>
+export function data() {
+    return {
+        name: 'Weex'
+    }
+}
+</script>

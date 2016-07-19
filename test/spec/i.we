@@ -1,0 +1,22 @@
+<template>
+    <div>
+        <text class="hello">Hello {{name}}</text>
+    </div>
+</template>
+
+
+<style>
+.hello {
+    font-size: 26px;
+    color: red;
+}
+</style>
+
+
+<script type="config">
+{
+    downgrade: true
+}
+</script>
+
+<script type="data" src="./data.json"></script>
