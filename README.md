@@ -137,7 +137,7 @@ And you can check the specs in `test/spec` folder.
 ## Knew Issues
 
 - [`Bug` Source Map Offset](https://github.com/webpack/webpack/issues/2145). Encoding to this problem, please use `devtool:"eval-source-map"` instead of `devtool:"source-map"`.
-- [`Bug` Can't set debugger breakpoint](#). I still don't know the reason, but you can debug with `debugger` keywords.
+- [`Bug` Can't set debugger breakpoint](#). I still don't know the reason, but you can debug with `debugger` keyword.
 
 
 
