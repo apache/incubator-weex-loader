@@ -16,6 +16,13 @@ npm install weex-loader@0.3.0-alpha babel-loader babel-preset-es2015 babel-runti
 0. Can specify name when require `.we` file.
 0. Can write es2015 in script.
 
+## Upgrade to v0.3
+
+- Use a different way to load parted files. The old way is deprecated.
+- If you dependent `weex-components` under v0.1, please update it to v0.2.
+- Just enjoy the new features!
+- Use some hack way to require `@weex-model/xxxx` in `.js` file. see [issue](https://github.com/weexteam/weex-loader/issues/18#issuecomment-245204349)
+
 ## Usage
 
 ### How to load a `.we` file.
@@ -133,6 +140,7 @@ And you can check the specs in `test/spec` folder.
 - [Require commonjs module](test/spec/l.we)
 - [Require weex module in commonjs module](test/spec/m.we)
 - [Build with sourcemap(no test)](test/spec/n.we)
+- [Build weex examples](test/spec/o.we)
 
 ## Knew Issues
 

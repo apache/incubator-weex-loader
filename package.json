@@ -1,6 +1,6 @@
 {
   "name": "weex-loader",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "a webpack loader for weex",
   "main": "index.js",
   "author": "terrykingcha <terrykingcha@gmail.com>",
@@ -18,6 +18,7 @@
   "scripts": {
     "clear": "rm -f lib/* && rm -f test/actual/*",
     "lint": "eslint --fix src",
+    "dev": "gazeer -p \"src/*.js\" -c \"npm run build\"",
     "build": "node_modules/babel-cli/bin/babel.js src --out-dir lib",
     "test:build": "webpack --config test/webpack.config.js",
     "test:mocha": "mocha test/test.js",
@@ -37,6 +38,7 @@
     "coffee-loader": "^0.7.2",
     "coffee-script": "^1.10.0",
     "eslint": "^2.13.1",
+    "gazeer": "^0.1.1",
     "jade": "^1.11.0",
     "jade-html-loader": "0.0.3",
     "js-base64": "^2.1.9",
@@ -45,7 +47,8 @@
     "postcss-loader": "^0.9.1",
     "sinon": "^1.17.3",
     "sinon-chai": "^2.8.0",
-    "webpack": "~1.13.0"
+    "webpack": "~1.13.0",
+    "weex-components": "^0.2.0"
   },
   "dependencies": {
     "hash-sum": "^1.0.2",
@@ -55,7 +58,7 @@
     "source-map": "^0.5.6",
     "weex-scripter": "^0.1.4",
     "weex-styler": "^0.0.17",
-    "weex-templater": "^0.2.1",
+    "weex-templater": "^0.3.0",
     "weex-transformer": "^0.3.1"
   },
   "babel": {

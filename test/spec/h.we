@@ -12,6 +12,8 @@
 </style>
 
 <script>
+import './hi.we';
+
 export default {
     data() {
         return {
