@@ -46,7 +46,9 @@ export function getRequireString (loaderContext, loader, filepath) {
   return 'require(' +
                 loaderUtils.stringifyRequest(
                     loaderContext,
-                    `!!${loader}!${filepath}`
+                      loader ?
+                        `!!${loader}!${filepath}` :
+                        `${filepath}`
                 ) +
            ')\n'
 }

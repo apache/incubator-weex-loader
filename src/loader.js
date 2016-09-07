@@ -17,6 +17,7 @@ import {
 
 const loaderPath = __dirname
 const defaultLoaders = {
+  none: '',
   main: path.resolve(loaderPath, 'loader.js'),
   extract: path.resolve(loaderPath, 'extract.js'),
   template: path.resolve(loaderPath, 'template.js'),
@@ -243,7 +244,7 @@ function loader (source) {
             && fs.existsSync(filepath)) {
         output += getRequireString(
                     this,
-                    getLoaderString('main'),
+                    getLoaderString('none'),
                     `./${dep}.we`
                   )
       }

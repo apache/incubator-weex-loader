@@ -12,8 +12,6 @@ chai.use(sinonChai);
 const Base64 = require('js-base64').Base64;
 const SourceMap = require('source-map');
 
-
-
 function getActualString(name) {
   const filepath = path.resolve(__dirname, 'actual', `${name}.js`);
   const result = fs.readFileSync(filepath, 'utf-8');
@@ -70,6 +68,10 @@ describe('build', () => {
     bootstrapStub = sinon.stub();
 
     __weex_define__ = function(componentName, deps, factory) {
+      if (components[componentName]) {
+        throw new Error(`${componentName} is defined repeatly`);
+      }
+
       var __weex_require__ = requireStub;
       var __weex_exports__ = {};
       var __weex_module__ = {exports : __weex_exports__}
@@ -161,4 +163,8 @@ describe('build', () => {
     //   }
     // })
   });
-})
+
+  it('weex examples', () => {
+    expectActual('o');
+  });
+});

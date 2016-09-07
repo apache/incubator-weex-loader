@@ -3,7 +3,7 @@ var cssnext = require('postcss-cssnext')
 
 var entry = {}
 var start = 'a'
-var end = 'n'
+var end = 'o'
 var count = end.charCodeAt(0) - start.charCodeAt(0)
 
 new Array(count + 1).fill(0)
@@ -23,7 +23,7 @@ module.exports = {
     loaders: [
       {
         test: /\.we(\?[^?]+)?$/,
-        loaders: ['lib/loader.js']
+        loaders: [path.resolve(__dirname, '..', 'index.js')]
       },
       {
         test: /\.js/,
@@ -33,7 +33,7 @@ module.exports = {
   },
   devtool: 'inline-source-map',
   resolveLoader: {
-    modulesDirectories: ['./', './node_modules']
+    modulesDirectories: ['./node_modules']
   },
   postcss: function() {
     return [cssnext({
