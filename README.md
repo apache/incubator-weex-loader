@@ -21,6 +21,7 @@ npm install weex-loader@0.3.0-alpha babel-loader babel-preset-es2015 babel-runti
 - Use a different way to load parted files. The old way is deprecated.
 - If you dependent `weex-components` under v0.1, please update it to v0.2.
 - Just enjoy the new features!
+- Use some hack way to require `@weex-model/xxxx` in `.js` file. see [issue](https://github.com/weexteam/weex-loader/issues/18#issuecomment-245204349)
 
 ## Usage
 
