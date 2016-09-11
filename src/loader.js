@@ -131,7 +131,8 @@ function getLoaderString (type, config) {
     else {
       loaders.push({
         name: defaultLoaders.babel,
-        query: {
+        // respect user babel options
+        query: config.babel ? undefined : {
           presets: ['es2015'],
           plugins: ['transform-runtime'],
           comments: 'false'
@@ -309,7 +310,8 @@ function loader (source) {
                     lang: script.lang,
                     element: isElement,
                     elementName: isElement ? name : undefined,
-                    source: script.src
+                    source: script.src,
+                    babel: this.options.babel
                   }),
                   src
                 )
