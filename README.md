@@ -5,7 +5,7 @@ A webpack loader for Weex.
 ## Install
 
 ```
-npm install weex-loader@0.3.0-alpha babel-loader babel-preset-es2015 babel-runtime babel-plugin-transform-runtime --save
+npm install weex-loader babel-loader --save
 ```
 
 ## Features
