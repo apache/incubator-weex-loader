@@ -132,8 +132,8 @@ function getLoaderString (type, config) {
       loaders.push({
         name: defaultLoaders.babel,
         query: {
-          presets: ['es2015'],
-          plugins: ['transform-runtime'],
+          presets: [path.resolve(__dirname, '..', 'node_modules', 'babel-preset-es2015')],
+          plugins: [path.resolve(__dirname, '..', 'node_modules', 'babel-plugin-transform-runtime')],
           comments: 'false'
         }
       })
