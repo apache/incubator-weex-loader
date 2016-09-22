@@ -27,6 +27,18 @@ const defaultLoaders = {
   babel: 'babel-loader'
 }
 
+function loadBabelModule (moduleName) {
+  const currentModulePath = path.resolve(__dirname, '..', 'node_modules', moduleName)
+  const pwdModulePath = path.resolve(process.cwd(), 'node_modules', moduleName)
+  if (fs.existsSync(currentModulePath)) {
+    return currentModulePath
+  }
+  else if (fs.existsSync(pwdModulePath)) {
+    return pwdModulePath
+  }
+  return moduleName
+}
+
 function getLoaderString (type, config) {
   config = config || {}
   let customLoader
@@ -132,8 +144,8 @@ function getLoaderString (type, config) {
       loaders.push({
         name: defaultLoaders.babel,
         query: {
-          presets: [path.resolve(__dirname, '..', 'node_modules', 'babel-preset-es2015')],
-          plugins: [path.resolve(__dirname, '..', 'node_modules', 'babel-plugin-transform-runtime')],
+          presets: [loadBabelModule('babel-preset-es2015')],
+          plugins: [loadBabelModule('babel-plugin-transform-runtime')],
           comments: 'false'
         }
       })
