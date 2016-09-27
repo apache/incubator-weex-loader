@@ -33,9 +33,11 @@ function loadBabelModule (moduleName) {
   const pwdModulePath = path.resolve(process.cwd(), 'node_modules', moduleName)
   if (fs.existsSync(currentModulePath)) {
     return currentModulePath
-  } else if (fs.existsSync(upLevelModulePath)) {
+  }
+  else if (fs.existsSync(upLevelModulePath)) {
     return upLevelModulePath
-  } else if (fs.existsSync(pwdModulePath)) {
+  }
+  else if (fs.existsSync(pwdModulePath)) {
     return pwdModulePath
   }
   return moduleName
