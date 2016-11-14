@@ -21,7 +21,7 @@
     </script>
 </element>
 
-<element name="name">
+<we-element name="name">
     <template>
         <div><text class="name">{{name}}</text></div>
     </template>
@@ -42,7 +42,7 @@
         }
     }
     </script>
-</element>
+</we-element>
 
 <template>
     <div style="flex-direction: row;">

@@ -64,6 +64,10 @@ export function parseFragment (source) {
     else {
       type = node.tagName
     }
+    if (type === 'we-element') {
+      console.warn(`<we-element name="${getAttribute(node, 'name')}"> is deprecated, please use <element> instead.`)
+      type = 'element'
+    }
 
     if (!output[type]) {
       return
