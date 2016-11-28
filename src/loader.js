@@ -29,9 +29,13 @@ const defaultLoaders = {
 
 function loadBabelModule (moduleName) {
   const currentModulePath = path.resolve(__dirname, '..', 'node_modules', moduleName)
+  const upLevelModulePath = path.resolve(__dirname, '..', '..', '..', 'node_modules', moduleName)
   const pwdModulePath = path.resolve(process.cwd(), 'node_modules', moduleName)
   if (fs.existsSync(currentModulePath)) {
     return currentModulePath
+  }
+  else if (fs.existsSync(upLevelModulePath)) {
+    return upLevelModulePath
   }
   else if (fs.existsSync(pwdModulePath)) {
     return pwdModulePath
