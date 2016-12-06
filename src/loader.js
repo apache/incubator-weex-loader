@@ -210,9 +210,9 @@ function loader (source) {
 
   const options = this.options.weex || {}
   const customLang = options.lang || {}
-  const weexRequire = options.oldPrefix ? 'require' : '__weex_require__'
-  const weexDefine = options.oldPrefix ? 'define' : '__weex_define__'
-  const weexbootstrap = options.oldPrefix ? 'bootstrap' : '__weex_bootstrap__'
+  const weexRequire = options.keepOriginal ? 'require' : '__weex_require__'
+  const weexDefine = options.keepOriginal ? 'define' : '__weex_define__'
+  const weexbootstrap = options.keepOriginal ? 'bootstrap' : '__weex_bootstrap__'
 
   const loaderQuery = loaderUtils.parseQuery(this.query)
   const resourceQuery = loaderUtils.parseQuery(this.resourceQuery)
