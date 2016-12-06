@@ -135,7 +135,10 @@ function getLoaderString (type, config) {
 
   if (type === 'script') {
     loaders = [{
-      name: defaultLoaders.script
+      name: defaultLoaders.script,
+      query: {
+        weexRequire: config.weexRequire
+      }
     }]
     if (customLoader) {
       loaders = loaders.concat(customLoader)
@@ -207,6 +210,9 @@ function loader (source) {
 
   const options = this.options.weex || {}
   const customLang = options.lang || {}
+  const weexRequire = options.oldPrefix ? 'require' : '__weex_require__'
+  const weexDefine = options.oldPrefix ? 'define' : '__weex_define__'
+  const weexbootstrap = options.oldPrefix ? 'bootstrap' : '__weex_bootstrap__'
 
   const loaderQuery = loaderUtils.parseQuery(this.query)
   const resourceQuery = loaderUtils.parseQuery(this.resourceQuery)
@@ -321,7 +327,8 @@ function loader (source) {
                     lang: script.lang,
                     element: isElement,
                     elementName: isElement ? name : undefined,
-                    source: script.src
+                    source: script.src,
+                    weexRequire: weexRequire
                   }),
                   src
                 )
@@ -360,10 +367,10 @@ function loader (source) {
   }
 
   output += `
-__weex_define__('@weex-component/${name}', [], function(__weex_require__, __weex_exports__, __weex_module__) {
+${weexDefine}('@weex-component/${name}', [], function(${weexRequire}, __weex_exports__, __weex_module__) {
 ` + (
   frag.script.length > 0 ? `
-    __weex_script__(__weex_module__, __weex_exports__, __weex_require__)
+    __weex_script__(__weex_module__, __weex_exports__, ${weexRequire})
     if (__weex_exports__.__esModule && __weex_exports__.default) {
       __weex_module__.exports = __weex_exports__.default
     }
@@ -380,7 +387,7 @@ __weex_define__('@weex-component/${name}', [], function(__weex_require__, __weex
 `
   if (isEntry) {
     output += `
-__weex_bootstrap__('@weex-component/${name}'`
+${weexbootstrap}('@weex-component/${name}'`
   + (frag.config.length > 0 ? `,__weex_config__` : ',undefined')
   + (frag.data.length > 0 ? `,__weex_data__` : ',undefined')
 + `)`
