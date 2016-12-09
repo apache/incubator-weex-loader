@@ -59,7 +59,8 @@
     "weex-scripter": "^0.1.4",
     "weex-styler": "^0.0.17",
     "weex-templater": "^0.3.0",
-    "weex-transformer": "^0.3.1"
+    "weex-transformer": "^0.3.1",
+    "weex-vue-loader": "^0.2.1"
   },
   "babel": {
     "presets": [
