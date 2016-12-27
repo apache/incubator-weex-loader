@@ -1,6 +1,6 @@
 {
   "name": "weex-loader",
-  "version": "0.3.3",
+  "version": "0.4.1",
   "description": "a webpack loader for weex",
   "main": "index.js",
   "author": "terrykingcha <terrykingcha@gmail.com>",
@@ -57,9 +57,10 @@
     "parse5": "^2.1.5",
     "source-map": "^0.5.6",
     "weex-scripter": "^0.1.4",
-    "weex-styler": "^0.0.17",
+    "weex-styler": "^0.1.2",
     "weex-templater": "^0.3.0",
-    "weex-transformer": "^0.3.1"
+    "weex-transformer": "^0.4.2",
+    "weex-vue-loader": "^0.2.1"
   },
   "babel": {
     "presets": [
