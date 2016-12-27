@@ -15,6 +15,8 @@ import {
   stringifyLoaders
 } from './util'
 
+import vueLoader from 'weex-vue-loader'
+
 const loaderPath = __dirname
 const defaultLoaders = {
   none: '',
@@ -204,6 +206,12 @@ function getLoaderString (type, config) {
 
 function loader (source) {
   this.cacheable && this.cacheable()
+
+  // Support *.vue files.
+  // If file extname is vue then go to `weex-vue-loader`.
+  if (path.extname(this.resourcePath).match(/\.vue/)) {
+    return vueLoader.call(this, source)
+  }
 
   const options = this.options.weex || {}
   const customLang = options.lang || {}
