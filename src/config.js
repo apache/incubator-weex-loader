@@ -1,1 +1,1 @@
-export const logLevel = false
+export let logLevel = false

@@ -26,19 +26,17 @@ const defaultLoaders = {
   style: path.resolve(loaderPath, 'style.js'),
   script: path.resolve(loaderPath, 'script.js'),
   json: path.resolve(loaderPath, 'json.js'),
-  babel: 'babel-loader'
+  babel: loadBabelModule('babel-loader')
 }
 
-function loadBabelModule (moduleName) {
-  const currentModulePath = path.resolve(__dirname, '..', 'node_modules', moduleName)
-  const pwdModulePath = path.resolve(process.cwd(), 'node_modules', moduleName)
-  if (fs.existsSync(currentModulePath)) {
-    return currentModulePath
+function loadBabelModule(moduleName) {
+  try{
+    let path=require.resolve(moduleName)
+    return path.slice(0,path.indexOf(moduleName)+moduleName.length)
+
+  }catch(e){
+    return moduleName
   }
-  else if (fs.existsSync(pwdModulePath)) {
-    return pwdModulePath
-  }
-  return moduleName
 }
 
 function getLoaderString (type, config) {
