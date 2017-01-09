@@ -1,1 +1,1 @@
-export var logLevel = false
+export let logLevel = false
