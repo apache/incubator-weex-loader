@@ -29,12 +29,12 @@ const defaultLoaders = {
   babel: loadBabelModule('babel-loader')
 }
 
-function loadBabelModule(moduleName) {
-  try{
-    let path=require.resolve(moduleName)
-    return path.slice(0,path.indexOf(moduleName)+moduleName.length)
-
-  }catch(e){
+function loadBabelModule (moduleName) {
+  try {
+    const path = require.resolve(moduleName)
+    return path.slice(0, path.indexOf(moduleName) + moduleName.length)
+  }
+  catch (e) {
     return moduleName
   }
 }
