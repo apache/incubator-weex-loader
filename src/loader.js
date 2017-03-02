@@ -220,7 +220,7 @@ function loader (source) {
   const isElement = loaderQuery.element
   const isEntry = resourceQuery.entry
   const filename = path.relative('.', resourcePath)
-  const name = isEntry ? md5(filename) :
+  const name = isEntry ? md5(fs.readFileSync(filename)) :
                           (resourceQuery.name ||
                             getNameByPath(resourcePath))
 
