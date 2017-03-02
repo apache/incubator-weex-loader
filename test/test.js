@@ -168,3 +168,15 @@ describe('build', () => {
     expectActual('o');
   });
 });
+
+describe('test keepOriginal', () => {
+  it('keepOriginal is true', () => {
+    const actualStr = getActualString('original')
+    expect(actualStr.indexOf('__weex_require__')).eql(-1)
+    expect(actualStr.indexOf('__weex_define__')).eql(-1)
+    expect(actualStr.indexOf('__weex_bootstrap__')).eql(-1)
+    expect(actualStr.indexOf('require')).to.not.equal(-1)
+    expect(actualStr.indexOf('define')).to.not.equal(-1)
+    expect(actualStr.indexOf('bootstrap')).to.not.equal(-1)
+  })
+})
