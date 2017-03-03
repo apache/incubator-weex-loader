@@ -279,8 +279,7 @@
       "panel-header-danger": {
         "backgroundColor": "rgb(217,83,79)",
         "color": "#ffffff"
-      },
-      "panel-body": {}
+      }
     }
   },
   "@weex-component/wxc-tip": {
@@ -817,7 +816,7 @@
     },
     "style": {}
   },
-  "@weex-component/ff1b948d57ece2a9e61ad75680c9e80e": {
+  "@weex-component/4ccce06b967cdd6e535511a28b7ef3f6": {
     "data": "function () {return {\n\t    root: 'examples',\n\t    items: [{ name: 'hello', title: 'Hello World' }, { name: 'syntax/index', title: 'More Syntax' }, { name: 'style/index', title: 'Common Style' }, { name: 'animation', title: 'Animation' }, { name: 'component/text-demo', title: 'Text' }, { name: 'component/image-demo', title: 'Image' }, { name: 'component/input-demo', title: 'Input' }, { name: 'component/scroller-demo', title: 'Scroller' }, { name: 'component/list/list-basic', title: 'List (Basic)' }, { name: 'component/list/list-demo', title: 'List (Advanced)' }, { name: 'component/slider/index', title: 'Slider' }, { name: 'component/a-demo', title: 'A' }, { name: 'component/video-demo', title: 'Video' }, { name: 'component/countdown-demo', title: 'Countdown' }, { name: 'component/marquee-demo', title: 'Marquee' }, { name: 'component/web-demo', title: 'Web' }, { name: 'component/navigator-demo', title: 'Navigator' }, { name: 'component/tabbar/tabbar-demo', title: 'Tabbar' }, { name: 'component/process-bar-demo', title: 'ProcessBar' }, { name: 'module/instance-api', title: 'Instance API' }, { name: 'module/modal', title: 'Modal' }, { name: 'module/stream-demo', title: 'Stream' }, { name: 'module/storage-demo', title: 'Storage' }, { name: 'showcase/new-fashion/index', title: 'Activity' }, { name: 'showcase/calculator', title: 'Calculator' }, { name: 'showcase/minesweeper', title: 'Minesweeper' }, { name: 'showcase/ui', title: 'UI Gallery' }, { name: 'showcase/dropdown/dropdown-demo', title: 'Dropdown' }]\n\t  }}",
     "template": {
       "type": "example-list",

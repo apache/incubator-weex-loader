@@ -45,7 +45,7 @@
       }
     }
   },
-  "@weex-component/a3294f0702f2a9d0b48c66c00c4429af": {
+  "@weex-component/83d141e3ae1e4b9bed771852dc769062": {
     "data": "function data() {\n\t        return {\n\t            hi: 'Hello',\n\t            name: 'Weex'\n\t        };\n\t    }",
     "template": {
       "type": "div",
