@@ -31,9 +31,10 @@ const defaultLoaders = {
 
 function loadBabelModule (moduleName) {
   try {
-    let path = require.resolve(moduleName)
+    const path = require.resolve(moduleName)
     return path.slice(0, path.indexOf(moduleName) + moduleName.length)
-  } catch (e) {
+  }
+  catch (e) {
     return moduleName
   }
 }

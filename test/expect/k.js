@@ -1,5 +1,5 @@
 {
-  "@weex-component/6461408a6e72015716c3e75aedb3f4f8": {
+  "@weex-component/5c2b5206e3ccfe84e705e188262e29a1": {
     "ready": "function () {\n\t    return modal.toast({\n\t      'message': 'ready'\n\t    });\n\t  }",
     "data": "function () {\n\t    return {\n\t      hi: 'Hello',\n\t      name: 'Weex'\n\t    };\n\t  }",
     "template": {

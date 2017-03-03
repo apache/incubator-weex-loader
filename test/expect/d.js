@@ -22,7 +22,7 @@
       }
     }
   },
-  "@weex-component/efd01076a5d363118b9fa68bbab98216": {
+  "@weex-component/baafe3356c8cec15bbadb56b3a43cd37": {
     "data": "function data() {\n\t    return {\n\t        name: 'Weex'\n\t    };\n\t}",
     "template": {
       "type": "div",
