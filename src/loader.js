@@ -31,8 +31,8 @@ const defaultLoaders = {
 
 function loadBabelModule (moduleName) {
   try {
-    let path = require.resolve(moduleName)
-    return path.slice(0, path.indexOf(moduleName) + moduleName.length)
+    const filePath = require.resolve(moduleName)
+    return filePath.slice(0, filePath.lastIndexOf(moduleName) + moduleName.length)
   } catch (e) {
     return moduleName
   }
