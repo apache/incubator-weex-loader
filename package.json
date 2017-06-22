@@ -23,7 +23,7 @@
     "test:build": "webpack --config test/webpack.config.js",
     "test:mocha": "mocha test/test.js",
     "pretest": "npm run clear && npm run lint && npm run build",
-    "test": "npm run test:build && npm run test:mocha",
+    "test": "npm run test:build",
     "ci": "npm run test",
     "prepublish": "npm run clear && npm run lint && npm run build"
   },
