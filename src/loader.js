@@ -33,7 +33,8 @@ function loadBabelModule (moduleName) {
   try {
     const filePath = require.resolve(moduleName)
     return filePath.slice(0, filePath.lastIndexOf(moduleName) + moduleName.length)
-  } catch (e) {
+  }
+  catch (e) {
     return moduleName
   }
 }
