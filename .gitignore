@@ -3,3 +3,4 @@ lib
 test/actual/*.js
 test/actual/*.map
 *.log
+package-lock.json

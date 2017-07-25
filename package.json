@@ -60,7 +60,7 @@
     "weex-styler": "^0.2.0",
     "weex-templater": "^0.3.0",
     "weex-transformer": "^0.4.2",
-    "weex-vue-loader": "^0.3.0"
+    "weex-vue-loader": "^0.4.0"
   },
   "babel": {
     "presets": [
