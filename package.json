@@ -57,10 +57,10 @@
     "parse5": "^2.1.5",
     "source-map": "^0.5.6",
     "weex-scripter": "^0.1.4",
-    "weex-styler": "^0.1.2",
+    "weex-styler": "^0.2.0",
     "weex-templater": "^0.3.0",
     "weex-transformer": "^0.4.2",
-    "weex-vue-loader": "^0.2.10"
+    "weex-vue-loader": "^0.3.0"
   },
   "babel": {
     "presets": [
