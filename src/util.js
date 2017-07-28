@@ -45,10 +45,10 @@ export function logWarn (loader, logs) {
 export function getRequireString (loaderContext, loader, filepath) {
   return 'require(' +
                 loaderUtils.stringifyRequest(
-                    loaderContext,
-                      loader ?
-                        `!!${loader}!${filepath}` :
-                        `${filepath}`
+                  loaderContext,
+                  loader ?
+                    `!!${loader}!${filepath}` :
+                    `${filepath}`
                 ) +
            ')\n'
 }
@@ -156,8 +156,8 @@ export function splitSourceLine (source) {
 export function printSourceWithLine (source) {
   console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
   source = splitSourceLine(source)
-              .map((input, line) => {
-                console.log(line + 1 + ':', input)
-              })
+    .map((input, line) => {
+      console.log(line + 1 + ':', input)
+    })
   console.log('<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<')
 }

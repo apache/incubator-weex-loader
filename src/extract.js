@@ -33,25 +33,25 @@ module.exports = function (source, inputSourceMap) {
       if (this.sourceMap &&
         (type === 'scripts' || type === 'elements')) {
         const contentLineStart = result.line
-        let contentLineCount = 0
+        // let contentLineCount = 0
 
         let cmap
         if (inputSourceMap) {
           cmap = consumeMap(this, source, inputSourceMap)
           source = cmap.sourcesContent.join('')
-            // printSourceWithLine(source)
+          // printSourceWithLine(source)
         }
 
         const iterator = splitSourceLine(content)
           .map((input, line) => {
-            contentLineCount++
+            // contentLineCount++
             line = line + 1
             let originalLine = line + contentLineStart
             const generatedLine = line
             if (cmap) {
               // mapping to the original of input source
               originalLine = cmap.mapping[`line-${originalLine}-column-0`].line
-                // console.log(originalLine + ':', input)
+              // console.log(originalLine + ':', input)
             }
             return {
               original: {

@@ -221,7 +221,7 @@ function loader (source) {
   const isEntry = resourceQuery.entry
   const filename = path.relative('.', resourcePath)
   const name = isEntry ? md5(fs.readFileSync(filename)) :
-                          (resourceQuery.name ||
+    (resourceQuery.name ||
                             getNameByPath(resourcePath))
 
   let output = ''
@@ -244,14 +244,14 @@ function loader (source) {
       }
 
       output += getRequireString(
-                  this,
-                  getLoaderString('element', {
-                    customLang,
-                    name: element.name,
-                    source: element.src
-                  }),
-                  `${src}?name=${element.name}`
-                )
+        this,
+        getLoaderString('element', {
+          customLang,
+          name: element.name,
+          source: element.src
+        }),
+        `${src}?name=${element.name}`
+      )
     }
   }
 
@@ -261,10 +261,10 @@ function loader (source) {
       if (elementNames.indexOf(dep) < 0
             && fs.existsSync(filepath)) {
         output += getRequireString(
-                    this,
-                    getLoaderString('none'),
-                    `./${dep}.we`
-                  )
+          this,
+          getLoaderString('none'),
+          `./${dep}.we`
+        )
       }
     }
   }
@@ -368,20 +368,20 @@ function loader (source) {
   output += `
 __weex_define__('@weex-component/${name}', [], function(__weex_require__, __weex_exports__, __weex_module__) {
 ` + (
-  frag.script.length > 0 ? `
+      frag.script.length > 0 ? `
     __weex_script__(__weex_module__, __weex_exports__, __weex_require__)
     if (__weex_exports__.__esModule && __weex_exports__.default) {
       __weex_module__.exports = __weex_exports__.default
     }
 ` : ''
-) +
+    ) +
 `
     __weex_module__.exports.template = __weex_template__
 ` + (
-  frag.style.length > 0 ? `
+      frag.style.length > 0 ? `
     __weex_module__.exports.style = __weex_style__
 ` : ''
-) + `
+    ) + `
 })
 `
   if (isEntry) {
