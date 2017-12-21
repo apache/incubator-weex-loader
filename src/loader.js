@@ -27,7 +27,7 @@ const defaultLoaders = {
   babel: loadBabelModule('babel-loader')
 }
 
-function loadBabelModule(moduleName) {
+function loadBabelModule (moduleName) {
   try {
     const filePath = require.resolve(moduleName)
     return filePath.slice(0, filePath.lastIndexOf(moduleName) + moduleName.length)
@@ -37,7 +37,7 @@ function loadBabelModule(moduleName) {
   }
 }
 
-function getLoaderString(type, config) {
+function getLoaderString (type, config) {
   config = config || {}
   let customLoader
   let loaders
@@ -192,7 +192,7 @@ function getLoaderString(type, config) {
   }
 }
 
-function loader(source) {
+function loader (source) {
   this.cacheable && this.cacheable()
     // Support *.vue files.
     // If file extname is vue then go to `weex-vue-loader`.
