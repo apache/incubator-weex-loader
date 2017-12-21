@@ -1,6 +1,6 @@
 {
   "name": "weex-loader",
-  "version": "0.6.4",
+  "version": "0.6.5",
   "description": "a webpack loader for weex",
   "main": "index.js",
   "author": "terrykingcha <terrykingcha@gmail.com>",
@@ -52,7 +52,7 @@
     "babel-preset-es2015": "^6.9.0",
     "babel-runtime": "^6.9.2",
     "hash-sum": "^1.0.2",
-    "loader-utils": "~0.2.14",
+    "loader-utils": "^1.1.0",
     "md5": "^2.1.0",
     "parse5": "^2.1.5",
     "source-map": "^0.5.6",
