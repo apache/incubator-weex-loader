@@ -14,7 +14,7 @@ module.exports = function (source, inputSourceMap) {
   this.cacheable && this.cacheable()
 
   const callback = this.async()
-  const loaderQuery = loaderUtils.parseQuery(this.query)
+  const loaderQuery = loaderUtils.getOptions(this)
   const type = loaderQuery.type
   let index = loaderQuery.index
 

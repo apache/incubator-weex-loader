@@ -8,8 +8,8 @@ module.exports = function (source) {
   this.cacheable && this.cacheable()
 
   const callback = this.async()
-  const loaderQuery = loaderUtils.parseQuery(this.query)
-  const resourceQuery = loaderUtils.parseQuery(this.resourceQuery)
+  const loaderQuery = loaderUtils.getOptions(this) || {}
+  const resourceQuery = loaderUtils.parseQuery(this.resourceQuery) || {}
   const name = resourceQuery.name
 
   let contentPromise
