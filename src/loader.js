@@ -199,7 +199,7 @@ function loader (source) {
   if (path.extname(this.resourcePath).match(/\.vue/)) {
     return vueLoader.call(this, source)
   }
-  const options = this.options.weex || {}
+  const options = this._compiler.options.weex || {}
   const customLang = options.lang || {}
   const loaderQuery = loaderUtils.getOptions(this) || {}
   const resourceQuery = this.resourceQuery && loaderUtils.parseQuery(this.resourceQuery) || {}
