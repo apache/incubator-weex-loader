@@ -1,0 +1,20 @@
+{
+  "name": "vuetojs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build:weex": "npm run release:weex",
+    "release:weex": "node build/build-weex.js"
+  },
+  "author": "renmin",
+  "license": "ISC",
+  "dependencies": {
+    "babel-loader": "^8.0.6",
+    "weex-loader": "^0.7.12",
+    "webpack": "^2.2.1",
+    "friendly-errors-webpack-plugin": "^1.1.3",
+    "webpack-merge": "^2.6.1",
+    "chalk": "^1.1.3"
+  }
+}
