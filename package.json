@@ -6,7 +6,7 @@
   "author": "terrykingcha <terrykingcha@gmail.com>",
   "repository": {
     "type": "git",
-    "url": "https://github.com/weexteam/weex-loader.git"
+    "url": "https://github.com/apache/weex-loader.git"
   },
   "licenses": "Apache-2.0",
   "keywords": [
